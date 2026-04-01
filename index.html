@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Endocrine Explorer | Human Biology AAQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-glow hero-glow-a"></div>
+    <div class="hero-glow hero-glow-b"></div>
+    <div class="hero-content">
+      <p class="eyebrow">Human Biology Interactive</p>
+      <h1>Endocrine System and Homeostasis Lab</h1>
+      <p>
+        Explore gland anatomy, understand how hormones coordinate body responses,
+        and test applied scenarios for negative feedback, thermoregulation,
+        glucose homeostasis, and osmoregulation.
+      </p>
+      <a href="#gland-map" class="cta">Start Exploring</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="gland-map" class="panel map-panel">
+      <div class="panel-head">
+        <h2>Interactive Endocrine Body Outline</h2>
+        <p>Click any highlighted gland outline to see its key hormones and role.</p>
+      </div>
+
+      <div class="map-grid">
+        <div class="body-wrap" aria-label="Human body endocrine map">
+          <svg viewBox="0 0 360 780" role="img" aria-labelledby="bodyTitle bodyDesc">
+            <title id="bodyTitle">Human body with endocrine gland outlines</title>
+            <desc id="bodyDesc">Simplified body outline with clickable endocrine gland regions.</desc>
+
+            <path class="body-outline" d="M180 22c-31 0-57 25-57 56 0 22 14 41 33 50v45c0 18-8 35-22 46-17 13-27 33-27 55v120c0 18-9 35-24 45-17 12-27 32-27 53v210h248V492c0-21-10-41-27-53-15-10-24-27-24-45V274c0-22-10-42-27-55-14-11-22-28-22-46v-45c19-9 33-28 33-50 0-31-26-56-57-56z" />
+            <path class="limb" d="M90 286c-26 48-39 90-39 126 0 33 12 59 31 76" />
+            <path class="limb" d="M270 286c26 48 39 90 39 126 0 33-12 59-31 76" />
+            <path class="limb" d="M130 702c0 30-10 52-28 66" />
+            <path class="limb" d="M230 702c0 30 10 52 28 66" />
+
+            <g>
+              <ellipse class="gland" id="gland-pituitary" data-gland="pituitary" cx="180" cy="85" rx="10" ry="8"></ellipse>
+              <ellipse class="gland" id="gland-thyroid" data-gland="thyroid" cx="180" cy="170" rx="20" ry="14"></ellipse>
+              <ellipse class="gland" id="gland-adrenal-left" data-gland="adrenals" cx="145" cy="325" rx="11" ry="8"></ellipse>
+              <ellipse class="gland" id="gland-adrenal-right" data-gland="adrenals" cx="215" cy="325" rx="11" ry="8"></ellipse>
+              <ellipse class="gland" id="gland-pancreas" data-gland="pancreas" cx="180" cy="372" rx="36" ry="11"></ellipse>
+              <ellipse class="gland" id="gland-gonads" data-gland="gonads" cx="180" cy="570" rx="23" ry="12"></ellipse>
+            </g>
+          </svg>
+        </div>
+
+        <aside class="gland-card" id="gland-info" aria-live="polite">
+          <h3>Pituitary Gland</h3>
+          <p class="location">Location: base of the brain</p>
+          <p class="summary">Master regulator that releases trophic hormones controlling other endocrine glands.</p>
+          <div class="hormone-list">
+            <span>TSH</span><span>ACTH</span><span>GH</span><span>FSH/LH</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="panel hormone-panel">
+      <div class="panel-head">
+        <h2>How Endocrine Hormones Work</h2>
+        <p>Follow the signaling pathway from gland secretion to target-cell response.</p>
+      </div>
+
+      <div class="hormone-content">
+        <article class="definition-card">
+          <h3>Endocrine Hormones Defined</h3>
+          <p>
+            Endocrine hormones are chemical messengers released by glands directly into the bloodstream.
+            They travel to distant target cells, bind to specific receptors, and trigger coordinated physiological changes.
+          </p>
+          <ul>
+            <li>Secreted in very small amounts</li>
+            <li>Specific receptor binding determines target response</li>
+            <li>Negative feedback loops stabilize internal conditions</li>
+          </ul>
+        </article>
+
+        <div class="signal-anim" aria-hidden="true">
+          <div class="stage gland-stage">Gland</div>
+          <div class="flow-track">
+            <span class="hormone-dot dot-1"></span>
+            <span class="hormone-dot dot-2"></span>
+            <span class="hormone-dot dot-3"></span>
+          </div>
+          <div class="stage blood-stage">Blood</div>
+          <div class="flow-track">
+            <span class="hormone-dot dot-4"></span>
+            <span class="hormone-dot dot-5"></span>
+          </div>
+          <div class="stage receptor-stage">Target Cell Receptor</div>
+          <div class="response-pill">Response Activated</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel cases-panel">
+      <div class="panel-head">
+        <h2>Applied Homeostasis Cases</h2>
+        <p>Use sliders to perturb the system and observe hormone-driven corrections.</p>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Homeostasis case studies">
+        <button class="tab active" role="tab" aria-selected="true" data-case="negative">Negative Feedback</button>
+        <button class="tab" role="tab" aria-selected="false" data-case="thermo">Thermoregulation</button>
+        <button class="tab" role="tab" aria-selected="false" data-case="glucose">Glucose Homeostasis</button>
+        <button class="tab" role="tab" aria-selected="false" data-case="osmo">Osmoregulation</button>
+      </div>
+
+      <div class="case-view">
+        <article class="case-card active" data-panel="negative">
+          <h3>Negative Feedback: Thyroxine Loop</h3>
+          <label for="thyroxine">Thyroxine level</label>
+          <input id="thyroxine" type="range" min="0" max="100" value="55" />
+          <div class="meter-row">
+            <div><small>TRH</small><strong id="trh-val">45</strong></div>
+            <div><small>TSH</small><strong id="tsh-val">45</strong></div>
+            <div><small>Thyroxine</small><strong id="thyroxine-val">55</strong></div>
+          </div>
+          <p id="negative-msg">Thyroxine is near set point. Hypothalamus and pituitary output remain moderate.</p>
+        </article>
+
+        <article class="case-card" data-panel="thermo">
+          <h3>Thermoregulation: Heat vs Cold Stress</h3>
+          <label for="temperature">Core temperature (°C)</label>
+          <input id="temperature" type="range" min="34" max="41" value="37" step="0.1" />
+          <div class="meter-row">
+            <div><small>ADH</small><strong id="adh-val">50</strong></div>
+            <div><small>Thyroxine drive</small><strong id="thermo-thyroxine-val">50</strong></div>
+            <div><small>Sweating signal</small><strong id="sweat-val">50</strong></div>
+          </div>
+          <p id="thermo-msg">At set point, basal metabolic and cooling signals are balanced.</p>
+        </article>
+
+        <article class="case-card" data-panel="glucose">
+          <h3>Glucose Homeostasis: Insulin and Glucagon</h3>
+          <label for="glucose">Blood glucose (mmol/L)</label>
+          <input id="glucose" type="range" min="3" max="12" value="5.2" step="0.1" />
+          <div class="meter-row">
+            <div><small>Insulin</small><strong id="insulin-val">52</strong></div>
+            <div><small>Glucagon</small><strong id="glucagon-val">48</strong></div>
+            <div><small>Liver release</small><strong id="liver-val">45</strong></div>
+          </div>
+          <p id="glucose-msg">Normal range supports balanced insulin and glucagon secretion.</p>
+        </article>
+
+        <article class="case-card" data-panel="osmo">
+          <h3>Osmoregulation: Water Balance and ADH</h3>
+          <label for="osmolarity">Plasma osmolarity (mOsm/kg)</label>
+          <input id="osmolarity" type="range" min="265" max="320" value="290" />
+          <div class="meter-row">
+            <div><small>ADH</small><strong id="osmo-adh-val">50</strong></div>
+            <div><small>Thirst drive</small><strong id="thirst-val">50</strong></div>
+            <div><small>Urine concentration</small><strong id="urine-val">50</strong></div>
+          </div>
+          <p id="osmo-msg">Osmolarity is close to set point, so kidney water reabsorption is moderate.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Designed for active revision of AAQ endocrine biology concepts.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
