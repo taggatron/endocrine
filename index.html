@@ -314,6 +314,14 @@
       <div class="glucose-deep-grid">
         <div class="glucose-loop-shell">
           <div class="glucose-loop-track" id="glucose-loop-track" aria-label="Glucose process loop navigator">
+            <div class="loop-side-arrow loop-side-arrow-left" aria-hidden="true">
+              <span class="loop-side-arrow-label" id="glucose-left-arrow-label">Hyperglycaemia</span>
+              <span class="loop-arrow loop-arrow-up">
+                <span class="loop-arrow-shaft"></span>
+                <span class="loop-arrow-head"></span>
+              </span>
+            </div>
+
             <div class="loop-hemisphere" aria-hidden="true"></div>
 
             <button type="button" class="glucose-stage-btn stage-pos-1 active" data-stage-index="0">
@@ -365,6 +373,15 @@
               </span>
               <span class="stage-label">Set point restored</span>
             </button>
+
+            <div class="loop-side-arrow loop-side-arrow-right" aria-hidden="true">
+              <span class="loop-arrow loop-arrow-down">
+                <span class="loop-arrow-shaft"></span>
+                <span class="loop-arrow-head"></span>
+              </span>
+              <span class="loop-side-arrow-label loop-side-arrow-feedback">Negative feedback</span>
+            </div>
+
             <span class="loop-return" aria-hidden="true">↺</span>
           </div>
 

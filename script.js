@@ -358,6 +358,7 @@ const glucoseStageGland = document.getElementById("glucose-stage-gland");
 const glucoseStageHormone = document.getElementById("glucose-stage-hormone");
 const glucoseStageTarget = document.getElementById("glucose-stage-target");
 const glucoseStageResponse = document.getElementById("glucose-stage-response");
+const glucoseLeftArrowLabel = document.getElementById("glucose-left-arrow-label");
 const glucoseGraphCurve = document.getElementById("glucose-curve");
 const glucoseGraphMarker = document.getElementById("glucose-marker");
 const glucoseGraphCaption = document.getElementById("glucose-graph-caption");
@@ -373,7 +374,7 @@ const glucoseLoopData = {
     stages: [
       {
         navLabel: "Glucose rises",
-        detail: "Blood glucose rises after a carbohydrate-rich meal.",
+        detail: "Blood glucose rises after a carbohydrate-rich meal, typically around 140-180 mg per 100 mL.",
         gland: "Pancreas (islets, beta cells)",
         hormone: "Insulin rising, glucagon suppressed",
         target: "Pancreas sensing + liver and muscle priming",
@@ -382,7 +383,7 @@ const glucoseLoopData = {
       },
       {
         navLabel: "Pancreas detects",
-        detail: "Pancreatic beta cells detect the increased glucose concentration.",
+        detail: "Pancreatic beta cells detect the increased glucose concentration, commonly about 150-170 mg per 100 mL.",
         gland: "Pancreas (beta cells)",
         hormone: "Insulin secretion increases",
         target: "Liver and skeletal muscle",
@@ -391,7 +392,7 @@ const glucoseLoopData = {
       },
       {
         navLabel: "Hormone release",
-        detail: "Insulin drives transporter activity and anabolic storage pathways.",
+        detail: "Insulin drives transporter activity and anabolic storage pathways as glucose begins to fall toward roughly 130-150 mg per 100 mL.",
         gland: "Pancreas",
         hormone: "High insulin, low glucagon",
         target: "Liver and skeletal muscle target cells",
@@ -400,7 +401,7 @@ const glucoseLoopData = {
       },
       {
         navLabel: "Target uptake",
-        detail: "Liver and muscle convert glucose to glycogen for short-term storage.",
+        detail: "Liver and muscle convert glucose to glycogen for short-term storage, with blood glucose often near 110-125 mg per 100 mL.",
         gland: "Pancreas (ongoing insulin support)",
         hormone: "Insulin dominant",
         target: "Liver and skeletal muscle",
@@ -409,7 +410,7 @@ const glucoseLoopData = {
       },
       {
         navLabel: "Set point restored",
-        detail: "Blood glucose falls back toward set point and insulin tapers.",
+        detail: "Blood glucose falls back toward set point (about 90-100 mg per 100 mL) and insulin tapers.",
         gland: "Pancreas feedback control",
         hormone: "Insulin normalizes",
         target: "Whole-body glucose network",
@@ -423,7 +424,7 @@ const glucoseLoopData = {
     stages: [
       {
         navLabel: "Glucose drops",
-        detail: "Blood glucose drops between meals, overnight, or after prolonged activity.",
+        detail: "Blood glucose drops between meals, overnight, or after prolonged activity, commonly to around 65-75 mg per 100 mL.",
         gland: "Pancreas (islets, alpha cells)",
         hormone: "Glucagon begins to rise, insulin falls",
         target: "Pancreas sensing + liver priming",
@@ -432,7 +433,7 @@ const glucoseLoopData = {
       },
       {
         navLabel: "Pancreas detects",
-        detail: "Pancreatic alpha cells detect low glucose and increase glucagon release.",
+        detail: "Pancreatic alpha cells detect low glucose and increase glucagon release, often around 55-65 mg per 100 mL.",
         gland: "Pancreas (alpha cells)",
         hormone: "Glucagon increased",
         target: "Liver",
@@ -441,7 +442,7 @@ const glucoseLoopData = {
       },
       {
         navLabel: "Hormone release",
-        detail: "Liver increases glycogenolysis and gluconeogenesis to release glucose.",
+        detail: "Liver increases glycogenolysis and gluconeogenesis to release glucose when levels may be around 50-60 mg per 100 mL.",
         gland: "Pancreas support + hepatic response",
         hormone: "Glucagon dominant",
         target: "Liver hepatocytes",
@@ -450,7 +451,7 @@ const glucoseLoopData = {
       },
       {
         navLabel: "Target response",
-        detail: "Skeletal muscle reduces glucose disposal and shifts fuel preference.",
+        detail: "Skeletal muscle reduces glucose disposal and shifts fuel preference as blood glucose recovers toward about 60-75 mg per 100 mL.",
         gland: "Pancreas-adapted endocrine state",
         hormone: "Low insulin, high glucagon context",
         target: "Skeletal muscle target cells",
@@ -459,7 +460,7 @@ const glucoseLoopData = {
       },
       {
         navLabel: "Set point restored",
-        detail: "Blood glucose rises toward set point and counter-regulation tapers.",
+        detail: "Blood glucose rises toward set point (about 85-95 mg per 100 mL) and counter-regulation tapers.",
         gland: "Pancreas feedback control",
         hormone: "Glucagon and insulin move toward baseline",
         target: "Whole-body glucose network",
@@ -513,12 +514,27 @@ function buildGraphPath(points) {
     return "";
   }
 
-  return points.reduce((acc, point, idx) => {
-    if (idx === 0) {
-      return `M ${point.x} ${point.y}`;
-    }
-    return `${acc} L ${point.x} ${point.y}`;
-  }, "");
+  if (points.length === 1) {
+    return `M ${points[0].x} ${points[0].y}`;
+  }
+
+  let path = `M ${points[0].x} ${points[0].y}`;
+
+  for (let idx = 0; idx < points.length - 1; idx += 1) {
+    const p0 = points[idx - 1] || points[idx];
+    const p1 = points[idx];
+    const p2 = points[idx + 1];
+    const p3 = points[idx + 2] || p2;
+
+    const cp1x = p1.x + (p2.x - p0.x) / 6;
+    const cp1y = p1.y + (p2.y - p0.y) / 6;
+    const cp2x = p2.x - (p3.x - p1.x) / 6;
+    const cp2y = p2.y - (p3.y - p1.y) / 6;
+
+    path += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
+  }
+
+  return path;
 }
 
 function updateGlucoseGraph() {
@@ -546,6 +562,10 @@ function renderGlucoseLoop() {
 
   if (glucoseDeepPanel) {
     glucoseDeepPanel.setAttribute("data-active-mode", activeGlucoseMode);
+  }
+
+  if (glucoseLeftArrowLabel) {
+    glucoseLeftArrowLabel.textContent = activeGlucoseMode === "hyper" ? "Hyperglycaemia" : "Hypoglycaemia";
   }
 
   const stageEntry = modeEntry.stages[activeGlucoseStage];

@@ -762,7 +762,7 @@ svg {
 .glucose-loop-track {
   position: relative;
   display: block;
-  height: 310px;
+  height: 340px;
   background: #f2fbff;
   border: 1px solid var(--line);
   border-radius: 1rem;
@@ -784,8 +784,8 @@ svg {
   position: absolute;
   left: 10%;
   right: 10%;
-  bottom: 38px;
-  height: 220px;
+  bottom: 44px;
+  height: 232px;
   border: 4px solid transparent;
   border-top-color: var(--glucose-accent-a);
   border-left-color: var(--glucose-accent-a);
@@ -795,12 +795,97 @@ svg {
   opacity: 0.85;
 }
 
+.loop-side-arrow {
+  position: absolute;
+  top: 43%;
+  transform: translateY(-50%);
+  z-index: 1;
+  width: 92px;
+  height: 128px;
+  pointer-events: none;
+}
+
+.loop-side-arrow-left { left: -2.1rem; }
+.loop-side-arrow-right { right: -2.1rem; }
+
+.loop-arrow {
+  position: relative;
+  width: 30px;
+  height: 128px;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.loop-side-arrow-left .loop-arrow {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.loop-side-arrow-right .loop-arrow {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.loop-arrow-shaft {
+  position: absolute;
+  left: 10px;
+  top: 18px;
+  width: 10px;
+  height: 94px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--glucose-accent-a), var(--glucose-accent-b));
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.12);
+}
+
+.loop-arrow-head {
+  position: absolute;
+  left: 3px;
+  width: 24px;
+  height: 22px;
+  background: linear-gradient(145deg, var(--glucose-accent-a), var(--glucose-accent-b));
+  clip-path: polygon(50% 0, 0 100%, 100% 100%);
+}
+
+.loop-arrow-up .loop-arrow-head { top: 0; }
+
+.loop-arrow-down .loop-arrow-head {
+  bottom: 0;
+  transform: rotate(180deg);
+}
+
+.loop-side-arrow-label {
+  position: absolute;
+  top: 50%;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #134b61;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transform: translateY(-50%) rotate(90deg);
+  transform-origin: center;
+}
+
+.loop-side-arrow-left .loop-side-arrow-label {
+  left: 4px;
+}
+
+.loop-side-arrow-feedback {
+  right: 4px;
+}
+
+.glucose-deep-panel[data-active-mode="hypo"] .loop-side-arrow-left .loop-arrow,
+.glucose-deep-panel[data-active-mode="hypo"] .loop-side-arrow-right .loop-arrow {
+  transform: rotate(180deg);
+}
+
 .glucose-stage-btn {
   appearance: none;
   z-index: 2;
   position: absolute;
-  width: 116px;
-  min-height: 120px;
+  width: clamp(84px, 11vw, 120px);
+  min-height: clamp(94px, 12vw, 122px);
   border-radius: 0.9rem;
   border: 3px solid #38b56f;
   background: #fefcd9;
@@ -815,9 +900,10 @@ svg {
   align-content: center;
   gap: 0.22rem;
   padding: 0.28rem;
+  transform: translate(-50%, -50%);
 }
 
-.glucose-stage-btn:hover { transform: translateY(-1px); }
+.glucose-stage-btn:hover { transform: translate(-50%, calc(-50% - 1px)); }
 
 .glucose-stage-btn.active {
   background: linear-gradient(110deg, var(--glucose-accent-a), var(--glucose-accent-b));
@@ -825,11 +911,11 @@ svg {
   box-shadow: 0 0 0 4px var(--glucose-glow);
 }
 
-.stage-pos-1 { left: 11%; top: 175px; }
-.stage-pos-2 { left: 26%; top: 95px; }
-.stage-pos-3 { left: 42%; top: 44px; }
-.stage-pos-4 { left: 58%; top: 95px; }
-.stage-pos-5 { left: 73%; top: 175px; }
+.stage-pos-1 { left: 12%; top: 76%; }
+.stage-pos-2 { left: 28%; top: 50%; }
+.stage-pos-3 { left: 50%; top: 27%; }
+.stage-pos-4 { left: 72%; top: 50%; }
+.stage-pos-5 { left: 88%; top: 76%; }
 
 .stage-num { font-size: 0.98rem; line-height: 1; }
 
@@ -910,6 +996,10 @@ svg {
   background: #ffffff;
   border: 1px solid var(--line);
   border-radius: 0.8rem;
+}
+
+.glucose-graph-card {
+  min-width: 0;
 }
 
 .graph-axis { stroke: #315a6d; stroke-width: 2.2; }
@@ -1004,18 +1094,50 @@ footer {
   .hormone-content { grid-template-columns: 1fr; }
 
   .glucose-loop-panels { grid-template-columns: 1fr; }
-  .glucose-loop-track { height: 330px; }
+  .glucose-loop-track { height: 322px; }
+  .loop-hemisphere { bottom: 40px; height: 216px; }
 
-  .glucose-stage-btn {
-    width: 104px;
-    min-height: 112px;
+  .loop-arrow {
+    width: 26px;
+    height: 110px;
   }
 
-  .stage-pos-1 { left: 6%; }
-  .stage-pos-2 { left: 22%; }
-  .stage-pos-3 { left: 39%; }
-  .stage-pos-4 { left: 56%; }
-  .stage-pos-5 { left: 73%; }
+  .loop-side-arrow {
+    width: 82px;
+    height: 110px;
+  }
+
+  .loop-side-arrow-left { left: -1.7rem; }
+  .loop-side-arrow-right { right: -1.7rem; }
+
+  .loop-arrow-shaft {
+    left: 9px;
+    top: 18px;
+    width: 8px;
+    height: 76px;
+  }
+
+  .loop-arrow-head {
+    left: 2px;
+    width: 22px;
+    height: 20px;
+  }
+
+  .loop-side-arrow-label { font-size: 0.63rem; }
+
+  .loop-side-arrow-left .loop-side-arrow-label {
+    left: 3px;
+  }
+
+  .loop-side-arrow-feedback {
+    right: 3px;
+  }
+
+  .stage-pos-1 { left: 10%; top: 77%; }
+  .stage-pos-2 { left: 27%; top: 52%; }
+  .stage-pos-3 { left: 50%; top: 31%; }
+  .stage-pos-4 { left: 73%; top: 52%; }
+  .stage-pos-5 { left: 90%; top: 77%; }
 
   .match-board { grid-template-columns: 1fr 1fr; }
 
@@ -1043,30 +1165,82 @@ footer {
   .match-board { grid-template-columns: 1fr; }
 
   .glucose-loop-track {
-    height: 300px;
+    height: 292px;
     padding: 0.45rem;
   }
 
+  .loop-hemisphere {
+    left: 9%;
+    right: 9%;
+    bottom: 38px;
+    height: 194px;
+    border-width: 3px;
+  }
+
+  .loop-side-arrow-left { left: -1.35rem; }
+  .loop-side-arrow-right { right: -1.35rem; }
+
+  .loop-arrow {
+    width: 20px;
+    height: 84px;
+  }
+
+  .loop-side-arrow {
+    width: 66px;
+    height: 84px;
+  }
+
+  .loop-arrow-shaft {
+    left: 7px;
+    top: 14px;
+    width: 6px;
+    height: 58px;
+  }
+
+  .loop-arrow-head {
+    left: 1px;
+    width: 18px;
+    height: 16px;
+  }
+
+  .loop-side-arrow-label { font-size: 0.54rem; }
+
+  .loop-side-arrow-left .loop-side-arrow-label {
+    left: 2px;
+  }
+
+  .loop-side-arrow-feedback {
+    right: 2px;
+  }
+
   .glucose-stage-btn {
-    width: 72px;
-    min-height: 90px;
+    width: 70px;
+    min-height: 84px;
+    border-width: 2px;
+    padding: 0.2rem;
   }
 
   .mini-organ {
-    width: 24px;
-    height: 18px;
+    width: 19px;
+    height: 15px;
   }
 
   .stage-label {
-    font-size: 0.65rem;
-    max-width: 68px;
+    font-size: 0.56rem;
+    max-width: 64px;
+    line-height: 1.1;
   }
 
-  .stage-pos-1 { left: 3%; top: 184px; }
-  .stage-pos-2 { left: 20%; top: 120px; }
-  .stage-pos-3 { left: 40%; top: 80px; }
-  .stage-pos-4 { left: 60%; top: 120px; }
-  .stage-pos-5 { left: 78%; top: 184px; }
+  .stage-num { font-size: 0.84rem; }
+
+  .stage-pos-1 { left: 9%; top: 78%; }
+  .stage-pos-2 { left: 26%; top: 56%; }
+  .stage-pos-3 { left: 50%; top: 35%; }
+  .stage-pos-4 { left: 74%; top: 56%; }
+  .stage-pos-5 { left: 91%; top: 78%; }
+
+  .graph-label { font-size: 11px; }
+  .graph-zero-label { font-size: 10px; }
 
   .match-notes { grid-template-columns: 1fr; }
   .match-item { font-size: 1rem; }
