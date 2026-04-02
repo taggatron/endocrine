@@ -299,6 +299,94 @@
         </article>
       </div>
     </section>
+
+    <section class="panel glucose-deep-panel" id="glucose-homeostasis-deep">
+      <div class="panel-head">
+        <h2>Glucose Homeostasis Response Hub</h2>
+        <p>Compare how glands, hormones, and target organs coordinate responses during hyperglycaemia and hypoglycaemia.</p>
+      </div>
+
+      <div class="glucose-mode-row" role="tablist" aria-label="Glucose response scenarios">
+        <button class="glucose-mode active" role="tab" aria-selected="true" data-glucose-mode="hyper">Hyperglycaemia (High Blood Glucose)</button>
+        <button class="glucose-mode" role="tab" aria-selected="false" data-glucose-mode="hypo">Hypoglycaemia (Low Blood Glucose)</button>
+      </div>
+
+      <div class="glucose-deep-grid">
+        <article class="glucose-path-card active" data-glucose-panel="hyper">
+          <h3>Hyperglycaemia Pathway</h3>
+          <div class="glucose-chain" aria-label="Hyperglycaemia flow chart">
+            <div class="glucose-step">Blood glucose rises after meal</div>
+            <div class="glucose-step">Pancreatic beta cells detect increase</div>
+            <div class="glucose-step">Insulin secretion increases</div>
+            <div class="glucose-step">Liver and muscles increase glucose uptake</div>
+            <div class="glucose-step">Glycogen synthesis increases, glucose falls toward set point</div>
+          </div>
+          <div class="glucose-response-box">
+            <h4>Key Glands and Hormones</h4>
+            <p><strong>Primary gland:</strong> Pancreas (islets, beta cells)</p>
+            <p><strong>Hormonal profile:</strong> Insulin high, glucagon suppressed</p>
+            <p><strong>Target organs:</strong> Liver, skeletal muscle, adipose tissue</p>
+            <p><strong>Net response:</strong> Glucose storage and reduced hepatic glucose output</p>
+          </div>
+        </article>
+
+        <article class="glucose-path-card" data-glucose-panel="hypo">
+          <h3>Hypoglycaemia Pathway</h3>
+          <div class="glucose-chain" aria-label="Hypoglycaemia flow chart">
+            <div class="glucose-step">Blood glucose drops between meals or exercise</div>
+            <div class="glucose-step">Pancreatic alpha cells detect decrease</div>
+            <div class="glucose-step">Glucagon secretion increases</div>
+            <div class="glucose-step">Liver breaks down glycogen and releases glucose</div>
+            <div class="glucose-step">Muscle conserves glucose use, blood glucose returns toward set point</div>
+          </div>
+          <div class="glucose-response-box">
+            <h4>Key Glands and Hormones</h4>
+            <p><strong>Primary gland:</strong> Pancreas (islets, alpha cells)</p>
+            <p><strong>Hormonal profile:</strong> Glucagon high, insulin reduced</p>
+            <p><strong>Target organs:</strong> Liver, skeletal muscle, adipose tissue</p>
+            <p><strong>Net response:</strong> Increased hepatic glucose release and fuel mobilization</p>
+          </div>
+        </article>
+
+        <aside class="target-organs-card" aria-label="Glucose target organs and glands">
+          <h3>Organs and Target Cells</h3>
+          <p>These tissues are central to glucose balance and respond dynamically to insulin and glucagon.</p>
+
+          <div class="organ-grid">
+            <article class="organ-tile pancreas-tile">
+              <svg viewBox="0 0 120 80" class="organ-icon" aria-hidden="true">
+                <path d="M13 45c12-11 29-17 47-17 20 0 35 6 45 15 4 4 4 10 0 14-9 9-24 15-45 15-19 0-36-5-47-13-5-4-5-10 0-14z" />
+              </svg>
+              <h4>Pancreas</h4>
+              <p>Sensor gland for blood glucose; releases insulin and glucagon from islet cells.</p>
+            </article>
+
+            <article class="organ-tile liver-tile">
+              <svg viewBox="0 0 120 80" class="organ-icon" aria-hidden="true">
+                <path d="M10 48c0-18 18-30 42-30h57v37c0 9-8 17-17 17H38C23 72 10 62 10 48z" />
+              </svg>
+              <h4>Liver</h4>
+              <p>Major glucose buffer: stores glucose as glycogen and releases glucose when needed.</p>
+            </article>
+
+            <article class="organ-tile muscle-tile">
+              <svg viewBox="0 0 120 80" class="organ-icon" aria-hidden="true">
+                <path d="M16 56c0-9 5-16 13-20l25-12c6-3 13-1 17 4l17 20c4 5 4 11 1 16-4 6-11 9-18 7L34 64c-11-2-18-8-18-8z" />
+              </svg>
+              <h4>Skeletal Muscle</h4>
+              <p>Insulin-sensitive target tissue that takes up glucose for glycogen storage and ATP production.</p>
+            </article>
+          </div>
+
+          <div class="glucose-particles" aria-hidden="true">
+            <span class="glucose-particle p-1"></span>
+            <span class="glucose-particle p-2"></span>
+            <span class="glucose-particle p-3"></span>
+            <span class="glucose-particle p-4"></span>
+          </div>
+        </aside>
+      </div>
+    </section>
   </main>
 
   <footer>

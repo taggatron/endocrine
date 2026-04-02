@@ -908,6 +908,221 @@ svg {
   color: #11623c;
 }
 
+.glucose-deep-panel {
+  background: linear-gradient(145deg, #f8feff 0%, #fffaf0 100%);
+}
+
+.glucose-mode-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-bottom: 0.9rem;
+}
+
+.glucose-mode {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: #f6fdff;
+  color: #204b5c;
+  border-radius: 0.75rem;
+  padding: 0.48rem 0.78rem;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.glucose-mode.active {
+  background: linear-gradient(110deg, #00b7c2, #36c9a0);
+  border-color: #00b7c2;
+  color: #fff;
+}
+
+.glucose-deep-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.95fr;
+  gap: 0.95rem;
+  align-items: start;
+}
+
+.glucose-path-card {
+  display: none;
+  background: #f7fbff;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  padding: 0.95rem;
+  animation: rise 0.3s ease;
+}
+
+.glucose-path-card.active {
+  display: block;
+}
+
+.glucose-path-card h3 {
+  margin-bottom: 0.8rem;
+}
+
+.glucose-chain {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.glucose-step {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  padding: 0.62rem 0.68rem;
+  color: #264c5c;
+  font-weight: 600;
+}
+
+.glucose-step:not(:last-child)::after {
+  content: "↓";
+  position: absolute;
+  left: 50%;
+  bottom: -0.62rem;
+  transform: translateX(-50%);
+  color: #1da9b8;
+  font-weight: 800;
+}
+
+.glucose-response-box {
+  margin-top: 0.9rem;
+  background: #eefaff;
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+  padding: 0.75rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.glucose-response-box h4 {
+  margin: 0;
+  color: #0b5d74;
+}
+
+.glucose-response-box p {
+  margin: 0;
+  color: #2d5162;
+}
+
+.target-organs-card {
+  position: relative;
+  background: linear-gradient(170deg, #f7fffa, #fff9f2);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  padding: 0.95rem;
+  overflow: hidden;
+}
+
+.target-organs-card h3 {
+  margin-bottom: 0.35rem;
+}
+
+.target-organs-card > p {
+  color: #37566a;
+  margin-bottom: 0.75rem;
+}
+
+.organ-grid {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.organ-tile {
+  position: relative;
+  z-index: 2;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+  padding: 0.6rem;
+}
+
+.organ-icon {
+  width: 100%;
+  max-width: 120px;
+  height: 56px;
+  display: block;
+}
+
+.organ-icon path {
+  fill: #ffd27f;
+  stroke: #d38b2b;
+  stroke-width: 3;
+}
+
+.liver-tile .organ-icon path {
+  fill: #f3a27b;
+  stroke: #b76d46;
+}
+
+.muscle-tile .organ-icon path {
+  fill: #f7a8a0;
+  stroke: #bb5f58;
+}
+
+.organ-tile h4 {
+  margin: 0.2rem 0 0.2rem;
+  color: #123b4d;
+}
+
+.organ-tile p {
+  margin: 0;
+  color: #35566a;
+  font-size: 0.92rem;
+}
+
+.glucose-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.glucose-particle {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #ffa726;
+  box-shadow: 0 0 0 4px rgba(255, 167, 38, 0.22);
+  animation: glucoseFloat 5.5s ease-in-out infinite;
+}
+
+.p-1 {
+  left: 12%;
+  top: 18%;
+}
+
+.p-2 {
+  left: 74%;
+  top: 26%;
+  animation-delay: 1.1s;
+}
+
+.p-3 {
+  left: 36%;
+  top: 72%;
+  animation-delay: 2s;
+}
+
+.p-4 {
+  left: 82%;
+  top: 76%;
+  animation-delay: 3s;
+}
+
+@keyframes glucoseFloat {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translateY(-10px) scale(1.08);
+    opacity: 1;
+  }
+}
+
 footer {
   text-align: center;
   color: #466072;
@@ -918,6 +1133,10 @@ footer {
 @media (max-width: 920px) {
   .map-grid,
   .hormone-content {
+    grid-template-columns: 1fr;
+  }
+
+  .glucose-deep-grid {
     grid-template-columns: 1fr;
   }
 

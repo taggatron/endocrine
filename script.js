@@ -349,6 +349,23 @@ updateThermoregulation();
 updateGlucose();
 updateOsmoregulation();
 
+const glucoseModes = document.querySelectorAll(".glucose-mode");
+const glucosePanels = document.querySelectorAll(".glucose-path-card");
+
+glucoseModes.forEach((modeButton) => {
+  modeButton.addEventListener("click", () => {
+    glucoseModes.forEach((button) => {
+      const active = button === modeButton;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-selected", active ? "true" : "false");
+    });
+
+    glucosePanels.forEach((panel) => {
+      panel.classList.toggle("active", panel.dataset.glucosePanel === modeButton.dataset.glucoseMode);
+    });
+  });
+});
+
 const matchBoard = document.getElementById("match-board");
 const matchLines = document.getElementById("match-lines");
 const matchStatus = document.getElementById("match-status");
