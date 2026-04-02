@@ -33,6 +33,7 @@ const glandData = {
 
 const glandInfo = document.getElementById("gland-info");
 const glandNodes = document.querySelectorAll(".gland");
+const glandHitNodes = document.querySelectorAll(".gland-hit");
 
 function setActiveGland(glandKey) {
   const entry = glandData[glandKey];
@@ -54,7 +55,7 @@ function setActiveGland(glandKey) {
   `;
 }
 
-glandNodes.forEach((node) => {
+glandHitNodes.forEach((node) => {
   node.addEventListener("click", () => setActiveGland(node.dataset.gland));
 });
 

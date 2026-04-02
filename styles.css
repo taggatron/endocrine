@@ -164,22 +164,54 @@ svg {
   max-height: 640px;
 }
 
-.body-outline,
-.limb {
+.body-figure {
+  filter: drop-shadow(0 10px 16px rgba(68, 110, 129, 0.2));
+}
+
+.body-head,
+.body-neck,
+.body-core,
+.body-pelvis,
+.body-leg,
+.body-foot,
+.body-arm {
+  fill: url(#bodyFill);
+  stroke: #50778a;
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+
+.body-arm,
+.body-leg,
+.body-foot {
+  fill: url(#limbFill);
+}
+
+.body-midline,
+.body-shoulder-line {
   fill: none;
-  stroke: #5f7f92;
-  stroke-width: 4;
+  stroke: rgba(50, 91, 111, 0.45);
+  stroke-width: 2.2;
   stroke-linecap: round;
+  stroke-dasharray: 5 7;
 }
 
 .gland {
   fill: rgba(255, 127, 80, 0.24);
   stroke: #ff7f50;
   stroke-width: 2.4;
-  cursor: pointer;
   transition: transform 0.2s ease, fill 0.2s ease;
   transform-origin: center;
   animation: pulse 2.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.gland-hit {
+  fill: rgba(0, 0, 0, 0);
+  stroke: rgba(0, 0, 0, 0);
+  stroke-width: 10;
+  cursor: pointer;
+  pointer-events: all;
 }
 
 .gland:hover,

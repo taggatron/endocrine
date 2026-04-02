@@ -38,11 +38,45 @@
             <title id="bodyTitle">Human body with endocrine gland outlines</title>
             <desc id="bodyDesc">Simplified body outline with clickable endocrine gland regions.</desc>
 
-            <path class="body-outline" d="M180 22c-31 0-57 25-57 56 0 22 14 41 33 50v45c0 18-8 35-22 46-17 13-27 33-27 55v120c0 18-9 35-24 45-17 12-27 32-27 53v210h248V492c0-21-10-41-27-53-15-10-24-27-24-45V274c0-22-10-42-27-55-14-11-22-28-22-46v-45c19-9 33-28 33-50 0-31-26-56-57-56z" />
-            <path class="limb" d="M90 286c-26 48-39 90-39 126 0 33 12 59 31 76" />
-            <path class="limb" d="M270 286c26 48 39 90 39 126 0 33-12 59-31 76" />
-            <path class="limb" d="M130 702c0 30-10 52-28 66" />
-            <path class="limb" d="M230 702c0 30 10 52 28 66" />
+            <defs>
+              <linearGradient id="bodyFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f8fdff" />
+                <stop offset="100%" stop-color="#dceef5" />
+              </linearGradient>
+              <linearGradient id="limbFill" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fafdff" />
+                <stop offset="100%" stop-color="#d8ecf4" />
+              </linearGradient>
+            </defs>
+
+            <g class="body-figure" aria-hidden="true">
+              <ellipse class="body-head" cx="180" cy="77" rx="52" ry="55"></ellipse>
+              <rect class="body-neck" x="162" y="124" width="36" height="26" rx="14"></rect>
+
+              <path class="body-core" d="M110 170c0-28 24-48 70-48s70 20 70 48v202c0 38-27 63-70 63s-70-25-70-63V170z"></path>
+              <path class="body-pelvis" d="M132 396h96c19 0 33 14 33 31v32c0 23-18 42-41 42h-80c-23 0-41-19-41-42v-32c0-17 14-31 33-31z"></path>
+
+              <path class="body-arm" d="M110 188c-26 20-42 53-45 93-3 35 5 67 23 94 6 9 19 11 28 5 9-6 11-18 5-27-28-42-21-110 16-139 9-7 10-20 3-29-7-9-20-10-30-3z"></path>
+              <path class="body-arm" d="M250 188c26 20 42 53 45 93 3 35-5 67-23 94-6 9-19 11-28 5-9-6-11-18-5-27 28-42 21-110-16-139-9-7-10-20-3-29 7-9 20-10 30-3z"></path>
+
+              <path class="body-leg" d="M145 496c-16 0-29 13-29 29v174c0 15 12 27 27 27s27-12 27-27V525c0-16-12-29-25-29z"></path>
+              <path class="body-leg" d="M215 496c16 0 29 13 29 29v174c0 15-12 27-27 27s-27-12-27-27V525c0-16 12-29 25-29z"></path>
+
+              <path class="body-foot" d="M111 725h62c10 0 18 8 18 18s-8 18-18 18h-69c-11 0-20-9-20-20 0-9 7-16 16-16h11z"></path>
+              <path class="body-foot" d="M187 743c0-10 8-18 18-18h62h11c9 0 16 7 16 16 0 11-9 20-20 20h-69c-10 0-18-8-18-18z"></path>
+
+              <path class="body-midline" d="M180 154v332"></path>
+              <path class="body-shoulder-line" d="M114 182c20 16 45 24 66 24s46-8 66-24"></path>
+            </g>
+
+            <g class="gland-hit-layer">
+              <ellipse class="gland-hit" data-gland="pituitary" cx="180" cy="85" rx="18" ry="16"></ellipse>
+              <ellipse class="gland-hit" data-gland="thyroid" cx="180" cy="170" rx="30" ry="24"></ellipse>
+              <ellipse class="gland-hit" data-gland="adrenals" cx="145" cy="325" rx="21" ry="18"></ellipse>
+              <ellipse class="gland-hit" data-gland="adrenals" cx="215" cy="325" rx="21" ry="18"></ellipse>
+              <ellipse class="gland-hit" data-gland="pancreas" cx="180" cy="372" rx="48" ry="22"></ellipse>
+              <ellipse class="gland-hit" data-gland="gonads" cx="180" cy="570" rx="34" ry="22"></ellipse>
+            </g>
 
             <g>
               <ellipse class="gland" id="gland-pituitary" data-gland="pituitary" cx="180" cy="85" rx="10" ry="8"></ellipse>
