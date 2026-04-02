@@ -314,7 +314,9 @@
       <div class="glucose-deep-grid">
         <div class="glucose-loop-shell">
           <div class="glucose-loop-track" id="glucose-loop-track" aria-label="Glucose process loop navigator">
-            <button type="button" class="glucose-stage-btn active" data-stage-index="0">
+            <div class="loop-hemisphere" aria-hidden="true"></div>
+
+            <button type="button" class="glucose-stage-btn stage-pos-1 active" data-stage-index="0">
               <span class="stage-num">1</span>
               <span class="stage-organs" aria-hidden="true">
                 <svg viewBox="0 0 120 80" class="mini-organ mini-pancreas" data-mini-organ="pancreas"><path d="M13 45c12-11 29-17 47-17 20 0 35 6 45 15 4 4 4 10 0 14-9 9-24 15-45 15-19 0-36-5-47-13-5-4-5-10 0-14z" /></svg>
@@ -323,7 +325,8 @@
               </span>
               <span class="stage-label">Glucose rises</span>
             </button>
-            <button type="button" class="glucose-stage-btn" data-stage-index="1">
+
+            <button type="button" class="glucose-stage-btn stage-pos-2" data-stage-index="1">
               <span class="stage-num">2</span>
               <span class="stage-organs" aria-hidden="true">
                 <svg viewBox="0 0 120 80" class="mini-organ mini-pancreas" data-mini-organ="pancreas"><path d="M13 45c12-11 29-17 47-17 20 0 35 6 45 15 4 4 4 10 0 14-9 9-24 15-45 15-19 0-36-5-47-13-5-4-5-10 0-14z" /></svg>
@@ -332,7 +335,8 @@
               </span>
               <span class="stage-label">Pancreas detects</span>
             </button>
-            <button type="button" class="glucose-stage-btn" data-stage-index="2">
+
+            <button type="button" class="glucose-stage-btn stage-pos-3" data-stage-index="2">
               <span class="stage-num">3</span>
               <span class="stage-organs" aria-hidden="true">
                 <svg viewBox="0 0 120 80" class="mini-organ mini-pancreas" data-mini-organ="pancreas"><path d="M13 45c12-11 29-17 47-17 20 0 35 6 45 15 4 4 4 10 0 14-9 9-24 15-45 15-19 0-36-5-47-13-5-4-5-10 0-14z" /></svg>
@@ -341,7 +345,8 @@
               </span>
               <span class="stage-label">Hormone release</span>
             </button>
-            <button type="button" class="glucose-stage-btn" data-stage-index="3">
+
+            <button type="button" class="glucose-stage-btn stage-pos-4" data-stage-index="3">
               <span class="stage-num">4</span>
               <span class="stage-organs" aria-hidden="true">
                 <svg viewBox="0 0 120 80" class="mini-organ mini-pancreas" data-mini-organ="pancreas"><path d="M13 45c12-11 29-17 47-17 20 0 35 6 45 15 4 4 4 10 0 14-9 9-24 15-45 15-19 0-36-5-47-13-5-4-5-10 0-14z" /></svg>
@@ -350,7 +355,8 @@
               </span>
               <span class="stage-label">Target uptake/release</span>
             </button>
-            <button type="button" class="glucose-stage-btn" data-stage-index="4">
+
+            <button type="button" class="glucose-stage-btn stage-pos-5" data-stage-index="4">
               <span class="stage-num">5</span>
               <span class="stage-organs" aria-hidden="true">
                 <svg viewBox="0 0 120 80" class="mini-organ mini-pancreas" data-mini-organ="pancreas"><path d="M13 45c12-11 29-17 47-17 20 0 35 6 45 15 4 4 4 10 0 14-9 9-24 15-45 15-19 0-36-5-47-13-5-4-5-10 0-14z" /></svg>
@@ -368,15 +374,20 @@
               <p id="glucose-stage-detail">Blood glucose rises after a carbohydrate-rich meal.</p>
             </article>
 
-            <aside class="target-organs-card" aria-label="Glucose target organs and glands">
-              <h3>Stage Focus</h3>
-              <p>Use the numbered loop buttons to step through the pathway. Each button now includes stage text and mini organ cues.</p>
-              <div class="glucose-particles" aria-hidden="true">
-                <span class="glucose-particle p-1"></span>
-                <span class="glucose-particle p-2"></span>
-                <span class="glucose-particle p-3"></span>
-                <span class="glucose-particle p-4"></span>
-              </div>
+            <aside class="glucose-graph-card" aria-label="Blood glucose graph over time">
+              <h3>Blood Glucose vs Time</h3>
+              <svg id="glucose-graph" class="glucose-graph" viewBox="0 0 520 270" role="img" aria-labelledby="glucoseGraphTitle glucoseGraphDesc">
+                <title id="glucoseGraphTitle">Blood glucose over time graph</title>
+                <desc id="glucoseGraphDesc">Animated marker moves along the glucose curve for each pathway stage.</desc>
+                <line x1="70" y1="30" x2="70" y2="235" class="graph-axis" />
+                <line x1="70" y1="130" x2="485" y2="130" class="graph-axis" />
+                <text x="490" y="136" class="graph-label">Time</text>
+                <text x="16" y="26" class="graph-label">Glucose</text>
+                <text x="76" y="124" class="graph-zero-label">y = 0 normal</text>
+                <path id="glucose-curve" class="graph-curve" d="" />
+                <circle id="glucose-marker" class="graph-marker" cx="90" cy="130" r="8" />
+              </svg>
+              <p id="glucose-graph-caption">Marker movement is synchronized to the selected stage.</p>
             </aside>
           </div>
 

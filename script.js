@@ -358,6 +358,14 @@ const glucoseStageGland = document.getElementById("glucose-stage-gland");
 const glucoseStageHormone = document.getElementById("glucose-stage-hormone");
 const glucoseStageTarget = document.getElementById("glucose-stage-target");
 const glucoseStageResponse = document.getElementById("glucose-stage-response");
+const glucoseGraphCurve = document.getElementById("glucose-curve");
+const glucoseGraphMarker = document.getElementById("glucose-marker");
+const glucoseGraphCaption = document.getElementById("glucose-graph-caption");
+
+const glucoseGraphProfiles = {
+  hyper: [0.34, 0.55, 0.42, 0.2, 0.04],
+  hypo: [-0.34, -0.55, -0.42, -0.2, -0.04]
+};
 
 const glucoseLoopData = {
   hyper: {
@@ -486,6 +494,50 @@ function updateStageButtonIcons() {
   });
 }
 
+function getGraphPoints(modeKey) {
+  const values = glucoseGraphProfiles[modeKey] || glucoseGraphProfiles.hyper;
+  const xStart = 95;
+  const xEnd = 455;
+  const baselineY = 130;
+  const amplitude = 78;
+  const stepX = (xEnd - xStart) / (values.length - 1);
+
+  return values.map((value, idx) => ({
+    x: xStart + stepX * idx,
+    y: baselineY - value * amplitude
+  }));
+}
+
+function buildGraphPath(points) {
+  if (points.length === 0) {
+    return "";
+  }
+
+  return points.reduce((acc, point, idx) => {
+    if (idx === 0) {
+      return `M ${point.x} ${point.y}`;
+    }
+    return `${acc} L ${point.x} ${point.y}`;
+  }, "");
+}
+
+function updateGlucoseGraph() {
+  if (!glucoseGraphCurve || !glucoseGraphMarker) {
+    return;
+  }
+
+  const points = getGraphPoints(activeGlucoseMode);
+  const activePoint = points[activeGlucoseStage] || points[0];
+  glucoseGraphCurve.setAttribute("d", buildGraphPath(points));
+  glucoseGraphMarker.setAttribute("cx", String(activePoint.x));
+  glucoseGraphMarker.setAttribute("cy", String(activePoint.y));
+
+  if (glucoseGraphCaption) {
+    const direction = activeGlucoseMode === "hyper" ? "above" : "below";
+    glucoseGraphCaption.textContent = `Stage ${activeGlucoseStage + 1}: marker moves ${direction} the y = 0 normal line as the pathway progresses.`;
+  }
+}
+
 function renderGlucoseLoop() {
   const modeEntry = glucoseLoopData[activeGlucoseMode];
   if (!modeEntry) {
@@ -527,6 +579,7 @@ function renderGlucoseLoop() {
   }
 
   updateStageButtonIcons();
+  updateGlucoseGraph();
 }
 
 glucoseModes.forEach((modeButton) => {
