@@ -197,3 +197,188 @@ updateNegativeFeedback();
 updateThermoregulation();
 updateGlucose();
 updateOsmoregulation();
+
+const matchBoard = document.getElementById("match-board");
+const matchLines = document.getElementById("match-lines");
+const matchStatus = document.getElementById("match-status");
+const matchReset = document.getElementById("match-reset");
+const matchItems = document.querySelectorAll(".match-item");
+
+const expectedMatches = {
+  adrenal: "adrenaline",
+  pancreas: "insulin-glucagon",
+  thyroid: "thyroxine",
+  pituitary: "fsh-lh",
+  ovaries: "oestrogen-progesterone",
+  testes: "testosterone"
+};
+
+if (matchBoard && matchLines && matchStatus && matchReset && matchItems.length > 0) {
+  let selectedLeft = null;
+  let selectedRight = null;
+  const matchedPairs = new Map();
+
+  function clearSelections() {
+    selectedLeft?.classList.remove("selected");
+    selectedRight?.classList.remove("selected");
+    selectedLeft = null;
+    selectedRight = null;
+  }
+
+  function setStatus(text, complete = false) {
+    matchStatus.textContent = text;
+    matchStatus.classList.toggle("match-complete", complete);
+  }
+
+  function boardCoordinates(element) {
+    const boardRect = matchBoard.getBoundingClientRect();
+    const rect = element.getBoundingClientRect();
+
+    return {
+      x: rect.left - boardRect.left + rect.width / 2,
+      y: rect.top - boardRect.top + rect.height / 2
+    };
+  }
+
+  function fitLineCanvas() {
+    const { width, height } = matchBoard.getBoundingClientRect();
+    matchLines.setAttribute("viewBox", `0 0 ${Math.max(1, width)} ${Math.max(1, height)}`);
+    matchLines.setAttribute("width", String(width));
+    matchLines.setAttribute("height", String(height));
+  }
+
+  function makeCurvePath(start, end) {
+    const midX = (start.x + end.x) / 2;
+    return `M ${start.x} ${start.y} C ${midX} ${start.y}, ${midX} ${end.y}, ${end.x} ${end.y}`;
+  }
+
+  function drawPairLine(leftEl, rightEl, state, key, persist) {
+    const start = boardCoordinates(leftEl);
+    const end = boardCoordinates(rightEl);
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+
+    path.classList.add("match-link", state);
+    path.setAttribute("d", makeCurvePath(start, end));
+    if (key) {
+      path.dataset.pair = key;
+    }
+
+    matchLines.appendChild(path);
+
+    if (!persist) {
+      window.setTimeout(() => path.remove(), 520);
+    }
+  }
+
+  function redrawMatchedLines() {
+    matchLines.innerHTML = "";
+    matchedPairs.forEach((rightId, leftId) => {
+      const leftEl = matchBoard.querySelector(`.match-item[data-side="left"][data-id="${leftId}"]`);
+      const rightEl = matchBoard.querySelector(`.match-item[data-side="right"][data-id="${rightId}"]`);
+      if (leftEl && rightEl) {
+        drawPairLine(leftEl, rightEl, "correct", `${leftId}-${rightId}`, true);
+      }
+    });
+  }
+
+  function markWrong(leftEl, rightEl) {
+    leftEl.classList.add("wrong");
+    rightEl.classList.add("wrong");
+    drawPairLine(leftEl, rightEl, "wrong", "", false);
+
+    window.setTimeout(() => {
+      leftEl.classList.remove("wrong");
+      rightEl.classList.remove("wrong");
+      clearSelections();
+      setStatus("Not quite. Try another pairing.");
+    }, 420);
+  }
+
+  function markCorrect(leftEl, rightEl) {
+    leftEl.classList.remove("selected");
+    rightEl.classList.remove("selected");
+    leftEl.classList.add("matched");
+    rightEl.classList.add("matched");
+    leftEl.disabled = true;
+    rightEl.disabled = true;
+
+    matchedPairs.set(leftEl.dataset.id, rightEl.dataset.id);
+    redrawMatchedLines();
+    clearSelections();
+
+    if (matchedPairs.size === Object.keys(expectedMatches).length) {
+      setStatus("Excellent work. You matched all gland-hormone pairs.", true);
+    } else {
+      const remaining = Object.keys(expectedMatches).length - matchedPairs.size;
+      setStatus(`Correct match. ${remaining} pair${remaining === 1 ? "" : "s"} left.`);
+    }
+  }
+
+  function tryMatch() {
+    if (!selectedLeft || !selectedRight) {
+      return;
+    }
+
+    const leftId = selectedLeft.dataset.id;
+    const rightId = selectedRight.dataset.id;
+    const isCorrect = expectedMatches[leftId] === rightId;
+
+    if (isCorrect) {
+      markCorrect(selectedLeft, selectedRight);
+      return;
+    }
+
+    markWrong(selectedLeft, selectedRight);
+  }
+
+  function handleSelect(item) {
+    if (item.classList.contains("matched")) {
+      return;
+    }
+
+    const side = item.dataset.side;
+    if (side === "left") {
+      selectedLeft?.classList.remove("selected");
+      selectedLeft = item;
+      selectedLeft.classList.add("selected");
+      setStatus("Gland selected. Now choose a hormone.");
+    } else {
+      selectedRight?.classList.remove("selected");
+      selectedRight = item;
+      selectedRight.classList.add("selected");
+      setStatus("Hormone selected. Now choose a gland.");
+    }
+
+    if (selectedLeft && selectedRight) {
+      tryMatch();
+    }
+  }
+
+  matchItems.forEach((item) => {
+    item.addEventListener("pointerdown", () => handleSelect(item));
+  });
+
+  matchReset.addEventListener("click", () => {
+    selectedLeft = null;
+    selectedRight = null;
+    matchedPairs.clear();
+    matchLines.innerHTML = "";
+
+    matchItems.forEach((item) => {
+      item.classList.remove("selected", "matched", "wrong");
+      item.disabled = false;
+    });
+
+    setStatus("Match all 6 pairs correctly.");
+    fitLineCanvas();
+  });
+
+  const redrawOnResize = () => {
+    fitLineCanvas();
+    redrawMatchedLines();
+  };
+
+  fitLineCanvas();
+  window.addEventListener("resize", redrawOnResize);
+  window.addEventListener("orientationchange", redrawOnResize);
+}

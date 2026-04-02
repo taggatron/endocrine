@@ -104,6 +104,42 @@
       </div>
     </section>
 
+    <section class="panel match-panel" id="hormone-match">
+      <div class="panel-head">
+        <h2>Click and Match: Glands and Hormones</h2>
+        <p>Select one gland and one hormone to connect them. Works with mouse and touch.</p>
+      </div>
+
+      <div class="match-toolbar">
+        <p id="match-status" aria-live="polite">Match all 6 pairs correctly.</p>
+        <button id="match-reset" type="button">Reset Activity</button>
+      </div>
+
+      <div class="match-board" id="match-board" aria-label="Glands and hormones matching activity">
+        <svg class="match-lines" id="match-lines" aria-hidden="true"></svg>
+
+        <div class="match-column" aria-label="Glands">
+          <h3>Glands</h3>
+          <button type="button" class="match-item" data-side="left" data-id="adrenal">adrenal gland</button>
+          <button type="button" class="match-item" data-side="left" data-id="pancreas">pancreas</button>
+          <button type="button" class="match-item" data-side="left" data-id="thyroid">thyroid gland</button>
+          <button type="button" class="match-item" data-side="left" data-id="pituitary">pituitary gland</button>
+          <button type="button" class="match-item" data-side="left" data-id="ovaries">ovaries</button>
+          <button type="button" class="match-item" data-side="left" data-id="testes">testes</button>
+        </div>
+
+        <div class="match-column" aria-label="Hormones">
+          <h3>Hormones</h3>
+          <button type="button" class="match-item" data-side="right" data-id="thyroxine">thyroxine</button>
+          <button type="button" class="match-item" data-side="right" data-id="testosterone">testosterone</button>
+          <button type="button" class="match-item" data-side="right" data-id="insulin-glucagon">insulin and glucagon</button>
+          <button type="button" class="match-item" data-side="right" data-id="fsh-lh">FSH and LH</button>
+          <button type="button" class="match-item" data-side="right" data-id="adrenaline">adrenaline</button>
+          <button type="button" class="match-item" data-side="right" data-id="oestrogen-progesterone">oestrogen and progesterone</button>
+        </div>
+      </div>
+    </section>
+
     <section class="panel cases-panel">
       <div class="panel-head">
         <h2>Applied Homeostasis Cases</h2>
