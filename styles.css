@@ -725,6 +725,31 @@ svg {
   --glucose-glow: rgba(239, 68, 68, 0.25);
 }
 
+.glucose-deep-panel[data-active-mode="hypo"] .glucose-loop-track::before {
+  top: 30%;
+  bottom: auto;
+}
+
+.glucose-deep-panel[data-active-mode="hypo"] .loop-hemisphere {
+  top: 30%;
+  bottom: auto;
+  height: 45%;
+  border: 4px solid transparent;
+  border-top: none;
+  border-left-color: var(--glucose-accent-a);
+  border-right-color: var(--glucose-accent-b);
+  border-bottom-color: var(--glucose-accent-b);
+  border-bottom-style: solid;
+  border-bottom-width: 4px;
+  border-radius: 0 0 999px 999px;
+}
+
+.glucose-deep-panel[data-active-mode="hypo"] .stage-pos-1 { top: 30%; }
+.glucose-deep-panel[data-active-mode="hypo"] .stage-pos-2 { top: 57%; }
+.glucose-deep-panel[data-active-mode="hypo"] .stage-pos-3 { top: 74%; }
+.glucose-deep-panel[data-active-mode="hypo"] .stage-pos-4 { top: 57%; }
+.glucose-deep-panel[data-active-mode="hypo"] .stage-pos-5 { top: 30%; }
+
 .glucose-mode-row {
   display: flex;
   flex-wrap: wrap;
@@ -878,6 +903,10 @@ svg {
 .glucose-deep-panel[data-active-mode="hypo"] .loop-side-arrow-left .loop-arrow,
 .glucose-deep-panel[data-active-mode="hypo"] .loop-side-arrow-right .loop-arrow {
   transform: rotate(180deg);
+}
+
+.glucose-deep-panel[data-active-mode="hypo"] .loop-side-arrow {
+  top: 56%;
 }
 
 .glucose-stage-btn {
@@ -1139,6 +1168,25 @@ footer {
   .stage-pos-4 { left: 73%; top: 52%; }
   .stage-pos-5 { left: 90%; top: 77%; }
 
+  .glucose-deep-panel[data-active-mode="hypo"] .glucose-loop-track::before {
+    top: 32%;
+  }
+
+  .glucose-deep-panel[data-active-mode="hypo"] .loop-hemisphere {
+    top: 32%;
+    height: 44%;
+  }
+
+  .glucose-deep-panel[data-active-mode="hypo"] .loop-side-arrow {
+    top: 57%;
+  }
+
+  .glucose-deep-panel[data-active-mode="hypo"] .stage-pos-1 { top: 23%; }
+  .glucose-deep-panel[data-active-mode="hypo"] .stage-pos-2 { top: 59%; }
+  .glucose-deep-panel[data-active-mode="hypo"] .stage-pos-3 { top: 76%; }
+  .glucose-deep-panel[data-active-mode="hypo"] .stage-pos-4 { top: 59%; }
+  .glucose-deep-panel[data-active-mode="hypo"] .stage-pos-5 { top: 23%; }
+
   .match-board { grid-template-columns: 1fr 1fr; }
 
   .match-notes {
@@ -1238,6 +1286,25 @@ footer {
   .stage-pos-3 { left: 50%; top: 35%; }
   .stage-pos-4 { left: 74%; top: 56%; }
   .stage-pos-5 { left: 91%; top: 78%; }
+
+  .glucose-deep-panel[data-active-mode="hypo"] .glucose-loop-track::before {
+    top: 34%;
+  }
+
+  .glucose-deep-panel[data-active-mode="hypo"] .loop-hemisphere {
+    top: 34%;
+    height: 42%;
+  }
+
+  .glucose-deep-panel[data-active-mode="hypo"] .loop-side-arrow {
+    top: 58%;
+  }
+
+  .glucose-deep-panel[data-active-mode="hypo"] .stage-pos-1 { top: 34%; }
+  .glucose-deep-panel[data-active-mode="hypo"] .stage-pos-2 { top: 61%; }
+  .glucose-deep-panel[data-active-mode="hypo"] .stage-pos-3 { top: 78%; }
+  .glucose-deep-panel[data-active-mode="hypo"] .stage-pos-4 { top: 61%; }
+  .glucose-deep-panel[data-active-mode="hypo"] .stage-pos-5 { top: 34%; }
 
   .graph-label { font-size: 11px; }
   .graph-zero-label { font-size: 10px; }

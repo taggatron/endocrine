@@ -374,7 +374,8 @@ const glucoseLoopData = {
     stages: [
       {
         navLabel: "Glucose rises",
-        detail: "Blood glucose rises after a carbohydrate-rich meal, typically around 140-180 mg per 100 mL.",
+        detail: "Blood glucose rises after a carbohydrate-rich meal.",
+        concentration: "140-180 mg per 100 mL",
         gland: "Pancreas (islets, beta cells)",
         hormone: "Insulin rising, glucagon suppressed",
         target: "Pancreas sensing + liver and muscle priming",
@@ -383,7 +384,8 @@ const glucoseLoopData = {
       },
       {
         navLabel: "Pancreas detects",
-        detail: "Pancreatic beta cells detect the increased glucose concentration, commonly about 150-170 mg per 100 mL.",
+        detail: "Pancreatic beta cells detect the increased glucose concentration.",
+        concentration: "150-170 mg per 100 mL",
         gland: "Pancreas (beta cells)",
         hormone: "Insulin secretion increases",
         target: "Liver and skeletal muscle",
@@ -392,7 +394,8 @@ const glucoseLoopData = {
       },
       {
         navLabel: "Hormone release",
-        detail: "Insulin drives transporter activity and anabolic storage pathways as glucose begins to fall toward roughly 130-150 mg per 100 mL.",
+        detail: "Insulin drives transporter activity and anabolic storage pathways.",
+        concentration: "130-150 mg per 100 mL",
         gland: "Pancreas",
         hormone: "High insulin, low glucagon",
         target: "Liver and skeletal muscle target cells",
@@ -401,7 +404,8 @@ const glucoseLoopData = {
       },
       {
         navLabel: "Target uptake",
-        detail: "Liver and muscle convert glucose to glycogen for short-term storage, with blood glucose often near 110-125 mg per 100 mL.",
+        detail: "Liver and muscle convert glucose to glycogen for short-term storage.",
+        concentration: "110-125 mg per 100 mL",
         gland: "Pancreas (ongoing insulin support)",
         hormone: "Insulin dominant",
         target: "Liver and skeletal muscle",
@@ -410,7 +414,8 @@ const glucoseLoopData = {
       },
       {
         navLabel: "Set point restored",
-        detail: "Blood glucose falls back toward set point (about 90-100 mg per 100 mL) and insulin tapers.",
+        detail: "Blood glucose falls back toward set point and insulin tapers.",
+        concentration: "90-100 mg per 100 mL",
         gland: "Pancreas feedback control",
         hormone: "Insulin normalizes",
         target: "Whole-body glucose network",
@@ -424,7 +429,8 @@ const glucoseLoopData = {
     stages: [
       {
         navLabel: "Glucose drops",
-        detail: "Blood glucose drops between meals, overnight, or after prolonged activity, commonly to around 65-75 mg per 100 mL.",
+        detail: "Blood glucose drops between meals, overnight, or after prolonged activity.",
+        concentration: "65-75 mg per 100 mL",
         gland: "Pancreas (islets, alpha cells)",
         hormone: "Glucagon begins to rise, insulin falls",
         target: "Pancreas sensing + liver priming",
@@ -433,7 +439,8 @@ const glucoseLoopData = {
       },
       {
         navLabel: "Pancreas detects",
-        detail: "Pancreatic alpha cells detect low glucose and increase glucagon release, often around 55-65 mg per 100 mL.",
+        detail: "Pancreatic alpha cells detect low glucose and increase glucagon release.",
+        concentration: "55-65 mg per 100 mL",
         gland: "Pancreas (alpha cells)",
         hormone: "Glucagon increased",
         target: "Liver",
@@ -442,7 +449,8 @@ const glucoseLoopData = {
       },
       {
         navLabel: "Hormone release",
-        detail: "Liver increases glycogenolysis and gluconeogenesis to release glucose when levels may be around 50-60 mg per 100 mL.",
+        detail: "Liver increases glycogenolysis and gluconeogenesis to release glucose.",
+        concentration: "50-60 mg per 100 mL",
         gland: "Pancreas support + hepatic response",
         hormone: "Glucagon dominant",
         target: "Liver hepatocytes",
@@ -451,7 +459,8 @@ const glucoseLoopData = {
       },
       {
         navLabel: "Target response",
-        detail: "Skeletal muscle reduces glucose disposal and shifts fuel preference as blood glucose recovers toward about 60-75 mg per 100 mL.",
+        detail: "Skeletal muscle reduces glucose disposal and shifts fuel preference.",
+        concentration: "60-75 mg per 100 mL",
         gland: "Pancreas-adapted endocrine state",
         hormone: "Low insulin, high glucagon context",
         target: "Skeletal muscle target cells",
@@ -460,7 +469,8 @@ const glucoseLoopData = {
       },
       {
         navLabel: "Set point restored",
-        detail: "Blood glucose rises toward set point (about 85-95 mg per 100 mL) and counter-regulation tapers.",
+        detail: "Blood glucose rises toward set point and counter-regulation tapers.",
+        concentration: "85-95 mg per 100 mL",
         gland: "Pancreas feedback control",
         hormone: "Glucagon and insulin move toward baseline",
         target: "Whole-body glucose network",
@@ -549,8 +559,9 @@ function updateGlucoseGraph() {
   glucoseGraphMarker.setAttribute("cy", String(activePoint.y));
 
   if (glucoseGraphCaption) {
-    const direction = activeGlucoseMode === "hyper" ? "above" : "below";
-    glucoseGraphCaption.textContent = `Stage ${activeGlucoseStage + 1}: marker moves ${direction} the y = 0 normal line as the pathway progresses.`;
+    const stageEntry = glucoseLoopData[activeGlucoseMode]?.stages[activeGlucoseStage];
+    const concentrationText = stageEntry?.concentration ? ` Typical concentration: ${stageEntry.concentration}.` : "";
+    glucoseGraphCaption.textContent = `Stage ${activeGlucoseStage + 1}: ${concentrationText}`;
   }
 }
 
