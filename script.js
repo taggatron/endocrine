@@ -34,6 +34,120 @@ const glandData = {
 const glandInfo = document.getElementById("gland-info");
 const glandNodes = document.querySelectorAll(".gland");
 const glandHitNodes = document.querySelectorAll(".gland-hit");
+const hormoneModalBackdrop = document.getElementById("hormone-modal-backdrop");
+const hormoneModalClose = document.getElementById("hormone-modal-close");
+const hormoneModalTitle = document.getElementById("hormone-modal-title");
+const hormoneModalWhat = document.getElementById("hormone-modal-what");
+const hormoneModalDoes = document.getElementById("hormone-modal-does");
+
+const hormoneDetails = {
+  tsh: {
+    what: "Thyroid-stimulating hormone released from the anterior pituitary.",
+    does: "Stimulates the thyroid gland to produce and release thyroid hormones (mainly T4 and T3)."
+  },
+  acth: {
+    what: "Adrenocorticotropic hormone from the anterior pituitary.",
+    does: "Stimulates the adrenal cortex to release cortisol for stress and metabolic regulation."
+  },
+  gh: {
+    what: "Growth hormone secreted by the anterior pituitary.",
+    does: "Promotes growth, protein synthesis, and energy mobilization in tissues."
+  },
+  fsh: {
+    what: "Follicle-stimulating hormone from the pituitary gonadotrophs.",
+    does: "Supports ovarian follicle development and estrogen production, and supports sperm production in testes."
+  },
+  lh: {
+    what: "Luteinizing hormone from the anterior pituitary.",
+    does: "Triggers ovulation and progesterone production in ovaries, and stimulates testosterone production in testes."
+  },
+  "adh posterior release": {
+    what: "Antidiuretic hormone produced in the hypothalamus and released by the posterior pituitary.",
+    does: "Increases kidney water reabsorption and helps maintain blood volume and osmolarity."
+  },
+  "t4 thyroxine": {
+    what: "The main thyroid hormone circulating in blood.",
+    does: "Raises metabolic rate and supports growth, neural function, and heat production."
+  },
+  t3: {
+    what: "The more biologically active thyroid hormone.",
+    does: "Binds nuclear receptors to regulate metabolic gene expression in target cells."
+  },
+  calcitonin: {
+    what: "Peptide hormone made by thyroid parafollicular cells.",
+    does: "Lowers blood calcium by reducing bone resorption and increasing calcium deposition in bone."
+  },
+  adrenaline: {
+    what: "Catecholamine hormone released by the adrenal medulla.",
+    does: "Drives the fight-or-flight response by increasing heart rate, blood flow to muscle, and glucose availability."
+  },
+  cortisol: {
+    what: "A glucocorticoid steroid hormone from the adrenal cortex.",
+    does: "Coordinates long-term stress response, influences immune activity, and increases glucose availability."
+  },
+  aldosterone: {
+    what: "A mineralocorticoid hormone made by the adrenal cortex.",
+    does: "Increases sodium and water retention in kidneys, helping regulate blood pressure."
+  },
+  insulin: {
+    what: "Peptide hormone from pancreatic beta cells.",
+    does: "Lowers blood glucose by promoting glucose uptake and storage in liver, muscle, and adipose tissue."
+  },
+  glucagon: {
+    what: "Peptide hormone from pancreatic alpha cells.",
+    does: "Raises blood glucose by stimulating glycogen breakdown and glucose release from the liver."
+  },
+  somatostatin: {
+    what: "Inhibitory peptide hormone from pancreatic delta cells and hypothalamus.",
+    does: "Dampens secretion of several hormones, including insulin, glucagon, GH, and TSH."
+  },
+  estrogen: {
+    what: "Primary female sex steroid hormones, mainly from ovaries.",
+    does: "Regulates menstrual cycle, supports reproductive tissues, and contributes to bone and cardiovascular health."
+  },
+  progesterone: {
+    what: "Steroid hormone mainly produced by the corpus luteum and placenta.",
+    does: "Prepares and maintains the uterus for implantation and pregnancy."
+  },
+  testosterone: {
+    what: "Primary androgen hormone, mainly from testes.",
+    does: "Supports sperm production, muscle and bone mass, and development of male secondary sex characteristics."
+  },
+  inhibin: {
+    what: "Gonadal peptide hormone produced in ovaries and testes.",
+    does: "Provides negative feedback to reduce pituitary FSH secretion."
+  }
+};
+
+function hormoneKey(name) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+function getHormoneDetails(name) {
+  return hormoneDetails[hormoneKey(name)] || {
+    what: "A signaling molecule secreted by an endocrine gland.",
+    does: "Travels in blood, binds specific receptors, and changes target-cell activity."
+  };
+}
+
+function openHormoneModal(name) {
+  if (!hormoneModalBackdrop || !hormoneModalTitle || !hormoneModalWhat || !hormoneModalDoes) {
+    return;
+  }
+
+  const details = getHormoneDetails(name);
+  hormoneModalTitle.textContent = name;
+  hormoneModalWhat.textContent = details.what;
+  hormoneModalDoes.textContent = details.does;
+  hormoneModalBackdrop.hidden = false;
+}
+
+function closeHormoneModal() {
+  if (!hormoneModalBackdrop) {
+    return;
+  }
+  hormoneModalBackdrop.hidden = true;
+}
 
 function setActiveGland(glandKey) {
   const entry = glandData[glandKey];
@@ -46,13 +160,49 @@ function setActiveGland(glandKey) {
     node.classList.toggle("active", active);
   });
 
-  const chips = entry.hormones.map((hormone) => `<span>${hormone}</span>`).join("");
+  const chips = entry.hormones
+    .map((hormone) => `<button type="button" class="hormone-chip" data-hormone="${hormone}">${hormone}</button>`)
+    .join("");
   glandInfo.innerHTML = `
     <h3>${entry.name}</h3>
     <p class="location">Location: ${entry.location}</p>
     <p class="summary">${entry.summary}</p>
     <div class="hormone-list">${chips}</div>
   `;
+}
+
+if (glandInfo) {
+  glandInfo.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+
+    const chip = target.closest(".hormone-chip");
+    if (!chip) {
+      return;
+    }
+
+    const hormoneName = chip.getAttribute("data-hormone");
+    if (hormoneName) {
+      openHormoneModal(hormoneName);
+    }
+  });
+}
+
+if (hormoneModalBackdrop && hormoneModalClose) {
+  hormoneModalClose.addEventListener("click", closeHormoneModal);
+  hormoneModalBackdrop.addEventListener("click", (event) => {
+    if (event.target === hormoneModalBackdrop) {
+      closeHormoneModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !hormoneModalBackdrop.hidden) {
+      closeHormoneModal();
+    }
+  });
 }
 
 glandHitNodes.forEach((node) => {
@@ -203,7 +353,7 @@ const matchBoard = document.getElementById("match-board");
 const matchLines = document.getElementById("match-lines");
 const matchStatus = document.getElementById("match-status");
 const matchReset = document.getElementById("match-reset");
-const matchItems = document.querySelectorAll(".match-item");
+const matchItems = document.querySelectorAll(".match-item, .match-action");
 
 const expectedMatches = {
   adrenal: "adrenaline",
@@ -217,13 +367,16 @@ const expectedMatches = {
 if (matchBoard && matchLines && matchStatus && matchReset && matchItems.length > 0) {
   let selectedLeft = null;
   let selectedRight = null;
-  const matchedPairs = new Map();
+  let selectedAction = null;
+  const matchedTriples = new Map();
 
   function clearSelections() {
     selectedLeft?.classList.remove("selected");
     selectedRight?.classList.remove("selected");
+    selectedAction?.classList.remove("selected");
     selectedLeft = null;
     selectedRight = null;
+    selectedAction = null;
   }
 
   function setStatus(text, complete = false) {
@@ -253,9 +406,9 @@ if (matchBoard && matchLines && matchStatus && matchReset && matchItems.length >
     return `M ${start.x} ${start.y} C ${midX} ${start.y}, ${midX} ${end.y}, ${end.x} ${end.y}`;
   }
 
-  function drawPairLine(leftEl, rightEl, state, key, persist) {
-    const start = boardCoordinates(leftEl);
-    const end = boardCoordinates(rightEl);
+  function drawLink(startEl, endEl, state, key, persist) {
+    const start = boardCoordinates(startEl);
+    const end = boardCoordinates(endEl);
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
 
     path.classList.add("match-link", state);
@@ -271,65 +424,77 @@ if (matchBoard && matchLines && matchStatus && matchReset && matchItems.length >
     }
   }
 
-  function redrawMatchedLines() {
+  function drawTriple(leftEl, rightEl, actionEl, state, key, persist) {
+    drawLink(leftEl, rightEl, state, `${key}-lr`, persist);
+    drawLink(rightEl, actionEl, state, `${key}-ra`, persist);
+  }
+
+  function redrawMatchedTriples() {
     matchLines.innerHTML = "";
-    matchedPairs.forEach((rightId, leftId) => {
+    matchedTriples.forEach((entry, leftId) => {
       const leftEl = matchBoard.querySelector(`.match-item[data-side="left"][data-id="${leftId}"]`);
-      const rightEl = matchBoard.querySelector(`.match-item[data-side="right"][data-id="${rightId}"]`);
-      if (leftEl && rightEl) {
-        drawPairLine(leftEl, rightEl, "correct", `${leftId}-${rightId}`, true);
+      const rightEl = matchBoard.querySelector(`.match-item[data-side="right"][data-id="${entry.rightId}"]`);
+      const actionEl = matchBoard.querySelector(`.match-action[data-side="action"][data-id="${entry.actionId}"]`);
+      if (leftEl && rightEl && actionEl) {
+        drawTriple(leftEl, rightEl, actionEl, "correct", `${leftId}-${entry.rightId}-${entry.actionId}`, true);
       }
     });
   }
 
-  function markWrong(leftEl, rightEl) {
+  function markWrong(leftEl, rightEl, actionEl) {
     leftEl.classList.add("wrong");
     rightEl.classList.add("wrong");
-    drawPairLine(leftEl, rightEl, "wrong", "", false);
+    actionEl.classList.add("wrong");
+    drawTriple(leftEl, rightEl, actionEl, "wrong", "", false);
 
     window.setTimeout(() => {
       leftEl.classList.remove("wrong");
       rightEl.classList.remove("wrong");
+      actionEl.classList.remove("wrong");
       clearSelections();
-      setStatus("Not quite. Try another pairing.");
+      setStatus("Not quite. Choose a gland, hormone, and matching action that belong together.");
     }, 420);
   }
 
-  function markCorrect(leftEl, rightEl) {
+  function markCorrect(leftEl, rightEl, actionEl) {
     leftEl.classList.remove("selected");
     rightEl.classList.remove("selected");
+    actionEl.classList.remove("selected");
     leftEl.classList.add("matched");
     rightEl.classList.add("matched");
+    actionEl.classList.add("matched");
     leftEl.disabled = true;
     rightEl.disabled = true;
+    actionEl.disabled = true;
 
-    matchedPairs.set(leftEl.dataset.id, rightEl.dataset.id);
-    redrawMatchedLines();
+    matchedTriples.set(leftEl.dataset.id, { rightId: rightEl.dataset.id, actionId: actionEl.dataset.id });
+    redrawMatchedTriples();
     clearSelections();
 
-    if (matchedPairs.size === Object.keys(expectedMatches).length) {
-      setStatus("Excellent work. You matched all gland-hormone pairs.", true);
+    if (matchedTriples.size === Object.keys(expectedMatches).length) {
+      setStatus("Excellent work. You matched all gland-hormone-action triples.", true);
     } else {
-      const remaining = Object.keys(expectedMatches).length - matchedPairs.size;
-      setStatus(`Correct match. ${remaining} pair${remaining === 1 ? "" : "s"} left.`);
+      const remaining = Object.keys(expectedMatches).length - matchedTriples.size;
+      setStatus(`Correct triple. ${remaining} set${remaining === 1 ? "" : "s"} left.`);
     }
   }
 
   function tryMatch() {
-    if (!selectedLeft || !selectedRight) {
+    if (!selectedLeft || !selectedRight || !selectedAction) {
       return;
     }
 
     const leftId = selectedLeft.dataset.id;
     const rightId = selectedRight.dataset.id;
-    const isCorrect = expectedMatches[leftId] === rightId;
+    const actionId = selectedAction.dataset.id;
+    const isCorrect = expectedMatches[leftId] === rightId && rightId === actionId;
 
     if (isCorrect) {
-      markCorrect(selectedLeft, selectedRight);
+      markCorrect(selectedLeft, selectedRight, selectedAction);
       return;
     }
 
-    markWrong(selectedLeft, selectedRight);
+    markWrong(selectedLeft, selectedRight, selectedAction);
   }
 
   function handleSelect(item) {
@@ -342,15 +507,20 @@ if (matchBoard && matchLines && matchStatus && matchReset && matchItems.length >
       selectedLeft?.classList.remove("selected");
       selectedLeft = item;
       selectedLeft.classList.add("selected");
-      setStatus("Gland selected. Now choose a hormone.");
-    } else {
+      setStatus("Gland selected. Choose a hormone and an action.");
+    } else if (side === "right") {
       selectedRight?.classList.remove("selected");
       selectedRight = item;
       selectedRight.classList.add("selected");
-      setStatus("Hormone selected. Now choose a gland.");
+      setStatus("Hormone selected. Choose a gland and an action.");
+    } else {
+      selectedAction?.classList.remove("selected");
+      selectedAction = item;
+      selectedAction.classList.add("selected");
+      setStatus("Action selected. Choose a gland and a hormone.");
     }
 
-    if (selectedLeft && selectedRight) {
+    if (selectedLeft && selectedRight && selectedAction) {
       tryMatch();
     }
   }
@@ -362,7 +532,8 @@ if (matchBoard && matchLines && matchStatus && matchReset && matchItems.length >
   matchReset.addEventListener("click", () => {
     selectedLeft = null;
     selectedRight = null;
-    matchedPairs.clear();
+    selectedAction = null;
+    matchedTriples.clear();
     matchLines.innerHTML = "";
 
     matchItems.forEach((item) => {
@@ -370,13 +541,13 @@ if (matchBoard && matchLines && matchStatus && matchReset && matchItems.length >
       item.disabled = false;
     });
 
-    setStatus("Match all 6 pairs correctly.");
+    setStatus("Match all 6 gland-hormone-action triples correctly.");
     fitLineCanvas();
   });
 
   const redrawOnResize = () => {
     fitLineCanvas();
-    redrawMatchedLines();
+    redrawMatchedTriples();
   };
 
   fitLineCanvas();

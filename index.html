@@ -105,7 +105,11 @@
           <p class="location">Location: base of the brain</p>
           <p class="summary">Master regulator that releases trophic hormones controlling other endocrine glands.</p>
           <div class="hormone-list">
-            <span>TSH</span><span>ACTH</span><span>GH</span><span>FSH/LH</span>
+            <button type="button" class="hormone-chip" data-hormone="TSH">TSH</button>
+            <button type="button" class="hormone-chip" data-hormone="ACTH">ACTH</button>
+            <button type="button" class="hormone-chip" data-hormone="GH">GH</button>
+            <button type="button" class="hormone-chip" data-hormone="FSH">FSH</button>
+            <button type="button" class="hormone-chip" data-hormone="LH">LH</button>
           </div>
         </aside>
       </div>
@@ -165,11 +169,11 @@
     <section class="panel match-panel" id="hormone-match">
       <div class="panel-head">
         <h2>Click and Match: Glands and Hormones</h2>
-        <p>Select one gland and one hormone to connect them. Works with mouse and touch.</p>
+        <p>Select one gland, one hormone, and one hormone action to complete each triple match.</p>
       </div>
 
       <div class="match-toolbar">
-        <p id="match-status" aria-live="polite">Match all 6 pairs correctly.</p>
+        <p id="match-status" aria-live="polite">Match all 6 gland-hormone-action triples correctly.</p>
         <button id="match-reset" type="button">Reset Activity</button>
       </div>
 
@@ -194,6 +198,16 @@
           <button type="button" class="match-item" data-side="right" data-id="fsh-lh">FSH and LH</button>
           <button type="button" class="match-item" data-side="right" data-id="adrenaline">adrenaline</button>
           <button type="button" class="match-item" data-side="right" data-id="oestrogen-progesterone">oestrogen and progesterone</button>
+        </div>
+
+        <div class="match-column match-notes" aria-label="Hormone actions">
+          <h3>Hormone Action</h3>
+          <button type="button" class="match-action" data-side="action" data-id="thyroxine">Raises metabolic rate and supports growth and heat production.</button>
+          <button type="button" class="match-action" data-side="action" data-id="testosterone">Drives male reproductive development and supports sperm production.</button>
+          <button type="button" class="match-action" data-side="action" data-id="insulin-glucagon">Balances blood glucose by increasing uptake or release of glucose.</button>
+          <button type="button" class="match-action" data-side="action" data-id="fsh-lh">Controls gonads: follicle development, ovulation, and sex hormone output.</button>
+          <button type="button" class="match-action" data-side="action" data-id="adrenaline">Rapid fight-or-flight hormone that increases heart rate and blood glucose.</button>
+          <button type="button" class="match-action" data-side="action" data-id="oestrogen-progesterone">Regulate menstrual cycle, ovulation, and preparation of the uterus.</button>
         </div>
       </div>
     </section>
@@ -222,6 +236,12 @@
             <div><small>Thyroxine</small><strong id="thyroxine-val">55</strong></div>
           </div>
           <p id="negative-msg">Thyroxine is near set point. Hypothalamus and pituitary output remain moderate.</p>
+          <ol class="case-flow" aria-label="Negative feedback flow chart">
+            <li class="flow-step" id="negative-flow-1">Thyroxine near set point</li>
+            <li class="flow-step" id="negative-flow-2">Moderate feedback to hypothalamus</li>
+            <li class="flow-step" id="negative-flow-3">TRH and TSH remain moderate</li>
+            <li class="flow-step" id="negative-flow-4">Metabolic rate stays stable</li>
+          </ol>
         </article>
 
         <article class="case-card" data-panel="thermo">
@@ -234,6 +254,12 @@
             <div><small>Sweating signal</small><strong id="sweat-val">50</strong></div>
           </div>
           <p id="thermo-msg">At set point, basal metabolic and cooling signals are balanced.</p>
+          <ol class="case-flow" aria-label="Thermoregulation flow chart">
+            <li class="flow-step" id="thermo-flow-1">Temperature near set point</li>
+            <li class="flow-step" id="thermo-flow-2">Hypothalamus compares to set point</li>
+            <li class="flow-step" id="thermo-flow-3">Balanced sweating and thyroid drive</li>
+            <li class="flow-step" id="thermo-flow-4">Core temperature remains stable</li>
+          </ol>
         </article>
 
         <article class="case-card" data-panel="glucose">
@@ -246,6 +272,12 @@
             <div><small>Liver release</small><strong id="liver-val">45</strong></div>
           </div>
           <p id="glucose-msg">Normal range supports balanced insulin and glucagon secretion.</p>
+          <ol class="case-flow" aria-label="Glucose homeostasis flow chart">
+            <li class="flow-step" id="glucose-flow-1">Glucose in normal range</li>
+            <li class="flow-step" id="glucose-flow-2">Pancreas samples blood glucose</li>
+            <li class="flow-step" id="glucose-flow-3">Balanced insulin and glucagon</li>
+            <li class="flow-step" id="glucose-flow-4">Tissues and liver stabilize glucose</li>
+          </ol>
         </article>
 
         <article class="case-card" data-panel="osmo">
@@ -258,6 +290,12 @@
             <div><small>Urine concentration</small><strong id="urine-val">50</strong></div>
           </div>
           <p id="osmo-msg">Osmolarity is close to set point, so kidney water reabsorption is moderate.</p>
+          <ol class="case-flow" aria-label="Osmoregulation flow chart">
+            <li class="flow-step" id="osmo-flow-1">Osmolarity near set point</li>
+            <li class="flow-step" id="osmo-flow-2">Hypothalamic osmoreceptors monitor plasma</li>
+            <li class="flow-step" id="osmo-flow-3">Moderate ADH and thirst signaling</li>
+            <li class="flow-step" id="osmo-flow-4">Kidney water handling stays balanced</li>
+          </ol>
         </article>
       </div>
     </section>
@@ -266,6 +304,17 @@
   <footer>
     <p>Designed for active revision of AAQ endocrine biology concepts.</p>
   </footer>
+
+  <div class="hormone-modal-backdrop" id="hormone-modal-backdrop" hidden>
+    <div class="hormone-modal" role="dialog" aria-modal="true" aria-labelledby="hormone-modal-title">
+      <button type="button" class="hormone-modal-close" id="hormone-modal-close" aria-label="Close hormone details">×</button>
+      <h3 id="hormone-modal-title">Hormone</h3>
+      <p class="hormone-modal-subhead">What it is</p>
+      <p id="hormone-modal-what"></p>
+      <p class="hormone-modal-subhead">What it does</p>
+      <p id="hormone-modal-does"></p>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
