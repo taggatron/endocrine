@@ -910,6 +910,17 @@ svg {
 
 .glucose-deep-panel {
   background: linear-gradient(145deg, #f8feff 0%, #fffaf0 100%);
+  --glucose-accent-a: #00b7c2;
+  --glucose-accent-b: #36c9a0;
+  --glucose-glow: rgba(0, 183, 194, 0.2);
+  --glucose-track: linear-gradient(90deg, #19a8bf, #39b56f);
+}
+
+.glucose-deep-panel[data-active-mode="hypo"] {
+  --glucose-accent-a: #f97316;
+  --glucose-accent-b: #ef4444;
+  --glucose-glow: rgba(239, 68, 68, 0.25);
+  --glucose-track: linear-gradient(90deg, #fb923c, #ef4444);
 }
 
 .glucose-mode-row {
@@ -932,8 +943,8 @@ svg {
 }
 
 .glucose-mode.active {
-  background: linear-gradient(110deg, #00b7c2, #36c9a0);
-  border-color: #00b7c2;
+  background: linear-gradient(110deg, var(--glucose-accent-a), var(--glucose-accent-b));
+  border-color: var(--glucose-accent-a);
   color: #fff;
 }
 
@@ -967,7 +978,7 @@ svg {
   right: 12%;
   top: 50%;
   height: 3px;
-  background: linear-gradient(90deg, #19a8bf, #39b56f);
+  background: var(--glucose-track);
   transform: translateY(-50%);
   z-index: 0;
 }
@@ -998,9 +1009,9 @@ svg {
 }
 
 .glucose-stage-btn.active {
-  background: linear-gradient(110deg, #00b7c2, #36c9a0);
+  background: linear-gradient(110deg, var(--glucose-accent-a), var(--glucose-accent-b));
   color: #fff;
-  box-shadow: 0 0 0 4px rgba(0, 183, 194, 0.2);
+  box-shadow: 0 0 0 4px var(--glucose-glow);
 }
 
 .stage-num {
@@ -1155,6 +1166,7 @@ svg {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  display: none;
 }
 
 .glucose-particle {

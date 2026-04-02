@@ -350,6 +350,7 @@ updateGlucose();
 updateOsmoregulation();
 
 const glucoseModes = document.querySelectorAll(".glucose-mode");
+const glucoseDeepPanel = document.getElementById("glucose-homeostasis-deep");
 const glucoseStageButtons = document.querySelectorAll(".glucose-stage-btn");
 const glucoseStageTitle = document.getElementById("glucose-stage-title");
 const glucoseStageDetail = document.getElementById("glucose-stage-detail");
@@ -489,6 +490,10 @@ function renderGlucoseLoop() {
   const modeEntry = glucoseLoopData[activeGlucoseMode];
   if (!modeEntry) {
     return;
+  }
+
+  if (glucoseDeepPanel) {
+    glucoseDeepPanel.setAttribute("data-active-mode", activeGlucoseMode);
   }
 
   const stageEntry = modeEntry.stages[activeGlucoseStage];
