@@ -350,21 +350,203 @@ updateGlucose();
 updateOsmoregulation();
 
 const glucoseModes = document.querySelectorAll(".glucose-mode");
-const glucosePanels = document.querySelectorAll(".glucose-path-card");
+const glucoseStageButtons = document.querySelectorAll(".glucose-stage-btn");
+const glucoseStageTitle = document.getElementById("glucose-stage-title");
+const glucoseStageDetail = document.getElementById("glucose-stage-detail");
+const glucoseStageGland = document.getElementById("glucose-stage-gland");
+const glucoseStageHormone = document.getElementById("glucose-stage-hormone");
+const glucoseStageTarget = document.getElementById("glucose-stage-target");
+const glucoseStageResponse = document.getElementById("glucose-stage-response");
+
+const glucoseLoopData = {
+  hyper: {
+    title: "Hyperglycaemia Pathway",
+    stages: [
+      {
+        navLabel: "Glucose rises",
+        detail: "Blood glucose rises after a carbohydrate-rich meal.",
+        gland: "Pancreas (islets, beta cells)",
+        hormone: "Insulin rising, glucagon suppressed",
+        target: "Pancreas sensing + liver and muscle priming",
+        response: "Detection phase begins and anabolic signaling ramps up.",
+        organs: ["pancreas"]
+      },
+      {
+        navLabel: "Pancreas detects",
+        detail: "Pancreatic beta cells detect the increased glucose concentration.",
+        gland: "Pancreas (beta cells)",
+        hormone: "Insulin secretion increases",
+        target: "Liver and skeletal muscle",
+        response: "Hormonal signal enters circulation to increase glucose uptake.",
+        organs: ["pancreas"]
+      },
+      {
+        navLabel: "Hormone release",
+        detail: "Insulin drives transporter activity and anabolic storage pathways.",
+        gland: "Pancreas",
+        hormone: "High insulin, low glucagon",
+        target: "Liver and skeletal muscle target cells",
+        response: "Cells increase glucose entry and reduce hepatic output.",
+        organs: ["liver", "muscle"]
+      },
+      {
+        navLabel: "Target uptake",
+        detail: "Liver and muscle convert glucose to glycogen for short-term storage.",
+        gland: "Pancreas (ongoing insulin support)",
+        hormone: "Insulin dominant",
+        target: "Liver and skeletal muscle",
+        response: "Glucose is buffered out of blood and stored as glycogen.",
+        organs: ["liver", "muscle"]
+      },
+      {
+        navLabel: "Set point restored",
+        detail: "Blood glucose falls back toward set point and insulin tapers.",
+        gland: "Pancreas feedback control",
+        hormone: "Insulin normalizes",
+        target: "Whole-body glucose network",
+        response: "Homeostasis is restored by negative feedback.",
+        organs: ["pancreas", "liver", "muscle"]
+      }
+    ]
+  },
+  hypo: {
+    title: "Hypoglycaemia Pathway",
+    stages: [
+      {
+        navLabel: "Glucose drops",
+        detail: "Blood glucose drops between meals, overnight, or after prolonged activity.",
+        gland: "Pancreas (islets, alpha cells)",
+        hormone: "Glucagon begins to rise, insulin falls",
+        target: "Pancreas sensing + liver priming",
+        response: "Counter-regulatory response activates.",
+        organs: ["pancreas"]
+      },
+      {
+        navLabel: "Pancreas detects",
+        detail: "Pancreatic alpha cells detect low glucose and increase glucagon release.",
+        gland: "Pancreas (alpha cells)",
+        hormone: "Glucagon increased",
+        target: "Liver",
+        response: "Circulating signal stimulates hepatic glucose production.",
+        organs: ["pancreas", "liver"]
+      },
+      {
+        navLabel: "Hormone release",
+        detail: "Liver increases glycogenolysis and gluconeogenesis to release glucose.",
+        gland: "Pancreas support + hepatic response",
+        hormone: "Glucagon dominant",
+        target: "Liver hepatocytes",
+        response: "Hepatic glucose output elevates blood glucose.",
+        organs: ["liver"]
+      },
+      {
+        navLabel: "Target response",
+        detail: "Skeletal muscle reduces glucose disposal and shifts fuel preference.",
+        gland: "Pancreas-adapted endocrine state",
+        hormone: "Low insulin, high glucagon context",
+        target: "Skeletal muscle target cells",
+        response: "Glucose is spared for essential organs, including brain.",
+        organs: ["muscle"]
+      },
+      {
+        navLabel: "Set point restored",
+        detail: "Blood glucose rises toward set point and counter-regulation tapers.",
+        gland: "Pancreas feedback control",
+        hormone: "Glucagon and insulin move toward baseline",
+        target: "Whole-body glucose network",
+        response: "Homeostasis is re-established.",
+        organs: ["pancreas", "liver", "muscle"]
+      }
+    ]
+  }
+};
+
+let activeGlucoseMode = "hyper";
+let activeGlucoseStage = 0;
+
+function updateStageButtonIcons() {
+  const modeEntry = glucoseLoopData[activeGlucoseMode];
+  if (!modeEntry) {
+    return;
+  }
+
+  glucoseStageButtons.forEach((button, idx) => {
+    const stageEntry = modeEntry.stages[idx];
+    const organsForStage = stageEntry ? stageEntry.organs : [];
+    const labelNode = button.querySelector(".stage-label");
+    if (labelNode && stageEntry?.navLabel) {
+      labelNode.textContent = stageEntry.navLabel;
+    }
+    const icons = button.querySelectorAll(".mini-organ");
+    icons.forEach((icon) => {
+      const organKey = icon.getAttribute("data-mini-organ");
+      icon.classList.toggle("is-on", Boolean(organKey && organsForStage.includes(organKey)));
+    });
+  });
+}
+
+function renderGlucoseLoop() {
+  const modeEntry = glucoseLoopData[activeGlucoseMode];
+  if (!modeEntry) {
+    return;
+  }
+
+  const stageEntry = modeEntry.stages[activeGlucoseStage];
+  if (!stageEntry) {
+    return;
+  }
+
+  glucoseStageButtons.forEach((button, idx) => {
+    const active = idx === activeGlucoseStage;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-current", active ? "step" : "false");
+  });
+
+  if (glucoseStageTitle) {
+    glucoseStageTitle.textContent = `${modeEntry.title}: Stage ${activeGlucoseStage + 1}`;
+  }
+  if (glucoseStageDetail) {
+    glucoseStageDetail.textContent = stageEntry.detail;
+  }
+  if (glucoseStageGland) {
+    glucoseStageGland.textContent = stageEntry.gland;
+  }
+  if (glucoseStageHormone) {
+    glucoseStageHormone.textContent = stageEntry.hormone;
+  }
+  if (glucoseStageTarget) {
+    glucoseStageTarget.textContent = stageEntry.target;
+  }
+  if (glucoseStageResponse) {
+    glucoseStageResponse.textContent = stageEntry.response;
+  }
+
+  updateStageButtonIcons();
+}
 
 glucoseModes.forEach((modeButton) => {
   modeButton.addEventListener("click", () => {
+    activeGlucoseMode = modeButton.dataset.glucoseMode || "hyper";
+    activeGlucoseStage = 0;
+
     glucoseModes.forEach((button) => {
       const active = button === modeButton;
       button.classList.toggle("active", active);
       button.setAttribute("aria-selected", active ? "true" : "false");
     });
 
-    glucosePanels.forEach((panel) => {
-      panel.classList.toggle("active", panel.dataset.glucosePanel === modeButton.dataset.glucoseMode);
-    });
+    renderGlucoseLoop();
   });
 });
+
+glucoseStageButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    activeGlucoseStage = Number(button.dataset.stageIndex || 0);
+    renderGlucoseLoop();
+  });
+});
+
+renderGlucoseLoop();
 
 const matchBoard = document.getElementById("match-board");
 const matchLines = document.getElementById("match-lines");

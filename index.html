@@ -312,79 +312,82 @@
       </div>
 
       <div class="glucose-deep-grid">
-        <article class="glucose-path-card active" data-glucose-panel="hyper">
-          <h3>Hyperglycaemia Pathway</h3>
-          <div class="glucose-chain" aria-label="Hyperglycaemia flow chart">
-            <div class="glucose-step">Blood glucose rises after meal</div>
-            <div class="glucose-step">Pancreatic beta cells detect increase</div>
-            <div class="glucose-step">Insulin secretion increases</div>
-            <div class="glucose-step">Liver and muscles increase glucose uptake</div>
-            <div class="glucose-step">Glycogen synthesis increases, glucose falls toward set point</div>
+        <div class="glucose-loop-shell">
+          <div class="glucose-loop-track" id="glucose-loop-track" aria-label="Glucose process loop navigator">
+            <button type="button" class="glucose-stage-btn active" data-stage-index="0">
+              <span class="stage-num">1</span>
+              <span class="stage-organs" aria-hidden="true">
+                <svg viewBox="0 0 120 80" class="mini-organ mini-pancreas" data-mini-organ="pancreas"><path d="M13 45c12-11 29-17 47-17 20 0 35 6 45 15 4 4 4 10 0 14-9 9-24 15-45 15-19 0-36-5-47-13-5-4-5-10 0-14z" /></svg>
+                <svg viewBox="0 0 120 80" class="mini-organ mini-liver" data-mini-organ="liver"><path d="M10 48c0-18 18-30 42-30h57v37c0 9-8 17-17 17H38C23 72 10 62 10 48z" /></svg>
+                <svg viewBox="0 0 120 80" class="mini-organ mini-muscle" data-mini-organ="muscle"><path d="M16 56c0-9 5-16 13-20l25-12c6-3 13-1 17 4l17 20c4 5 4 11 1 16-4 6-11 9-18 7L34 64c-11-2-18-8-18-8z" /></svg>
+              </span>
+              <span class="stage-label">Glucose rises</span>
+            </button>
+            <button type="button" class="glucose-stage-btn" data-stage-index="1">
+              <span class="stage-num">2</span>
+              <span class="stage-organs" aria-hidden="true">
+                <svg viewBox="0 0 120 80" class="mini-organ mini-pancreas" data-mini-organ="pancreas"><path d="M13 45c12-11 29-17 47-17 20 0 35 6 45 15 4 4 4 10 0 14-9 9-24 15-45 15-19 0-36-5-47-13-5-4-5-10 0-14z" /></svg>
+                <svg viewBox="0 0 120 80" class="mini-organ mini-liver" data-mini-organ="liver"><path d="M10 48c0-18 18-30 42-30h57v37c0 9-8 17-17 17H38C23 72 10 62 10 48z" /></svg>
+                <svg viewBox="0 0 120 80" class="mini-organ mini-muscle" data-mini-organ="muscle"><path d="M16 56c0-9 5-16 13-20l25-12c6-3 13-1 17 4l17 20c4 5 4 11 1 16-4 6-11 9-18 7L34 64c-11-2-18-8-18-8z" /></svg>
+              </span>
+              <span class="stage-label">Pancreas detects</span>
+            </button>
+            <button type="button" class="glucose-stage-btn" data-stage-index="2">
+              <span class="stage-num">3</span>
+              <span class="stage-organs" aria-hidden="true">
+                <svg viewBox="0 0 120 80" class="mini-organ mini-pancreas" data-mini-organ="pancreas"><path d="M13 45c12-11 29-17 47-17 20 0 35 6 45 15 4 4 4 10 0 14-9 9-24 15-45 15-19 0-36-5-47-13-5-4-5-10 0-14z" /></svg>
+                <svg viewBox="0 0 120 80" class="mini-organ mini-liver" data-mini-organ="liver"><path d="M10 48c0-18 18-30 42-30h57v37c0 9-8 17-17 17H38C23 72 10 62 10 48z" /></svg>
+                <svg viewBox="0 0 120 80" class="mini-organ mini-muscle" data-mini-organ="muscle"><path d="M16 56c0-9 5-16 13-20l25-12c6-3 13-1 17 4l17 20c4 5 4 11 1 16-4 6-11 9-18 7L34 64c-11-2-18-8-18-8z" /></svg>
+              </span>
+              <span class="stage-label">Hormone release</span>
+            </button>
+            <button type="button" class="glucose-stage-btn" data-stage-index="3">
+              <span class="stage-num">4</span>
+              <span class="stage-organs" aria-hidden="true">
+                <svg viewBox="0 0 120 80" class="mini-organ mini-pancreas" data-mini-organ="pancreas"><path d="M13 45c12-11 29-17 47-17 20 0 35 6 45 15 4 4 4 10 0 14-9 9-24 15-45 15-19 0-36-5-47-13-5-4-5-10 0-14z" /></svg>
+                <svg viewBox="0 0 120 80" class="mini-organ mini-liver" data-mini-organ="liver"><path d="M10 48c0-18 18-30 42-30h57v37c0 9-8 17-17 17H38C23 72 10 62 10 48z" /></svg>
+                <svg viewBox="0 0 120 80" class="mini-organ mini-muscle" data-mini-organ="muscle"><path d="M16 56c0-9 5-16 13-20l25-12c6-3 13-1 17 4l17 20c4 5 4 11 1 16-4 6-11 9-18 7L34 64c-11-2-18-8-18-8z" /></svg>
+              </span>
+              <span class="stage-label">Target uptake/release</span>
+            </button>
+            <button type="button" class="glucose-stage-btn" data-stage-index="4">
+              <span class="stage-num">5</span>
+              <span class="stage-organs" aria-hidden="true">
+                <svg viewBox="0 0 120 80" class="mini-organ mini-pancreas" data-mini-organ="pancreas"><path d="M13 45c12-11 29-17 47-17 20 0 35 6 45 15 4 4 4 10 0 14-9 9-24 15-45 15-19 0-36-5-47-13-5-4-5-10 0-14z" /></svg>
+                <svg viewBox="0 0 120 80" class="mini-organ mini-liver" data-mini-organ="liver"><path d="M10 48c0-18 18-30 42-30h57v37c0 9-8 17-17 17H38C23 72 10 62 10 48z" /></svg>
+                <svg viewBox="0 0 120 80" class="mini-organ mini-muscle" data-mini-organ="muscle"><path d="M16 56c0-9 5-16 13-20l25-12c6-3 13-1 17 4l17 20c4 5 4 11 1 16-4 6-11 9-18 7L34 64c-11-2-18-8-18-8z" /></svg>
+              </span>
+              <span class="stage-label">Set point restored</span>
+            </button>
+            <span class="loop-return" aria-hidden="true">↺</span>
           </div>
-          <div class="glucose-response-box">
-            <h4>Key Glands and Hormones</h4>
-            <p><strong>Primary gland:</strong> Pancreas (islets, beta cells)</p>
-            <p><strong>Hormonal profile:</strong> Insulin high, glucagon suppressed</p>
-            <p><strong>Target organs:</strong> Liver, skeletal muscle, adipose tissue</p>
-            <p><strong>Net response:</strong> Glucose storage and reduced hepatic glucose output</p>
-          </div>
-        </article>
 
-        <article class="glucose-path-card" data-glucose-panel="hypo">
-          <h3>Hypoglycaemia Pathway</h3>
-          <div class="glucose-chain" aria-label="Hypoglycaemia flow chart">
-            <div class="glucose-step">Blood glucose drops between meals or exercise</div>
-            <div class="glucose-step">Pancreatic alpha cells detect decrease</div>
-            <div class="glucose-step">Glucagon secretion increases</div>
-            <div class="glucose-step">Liver breaks down glycogen and releases glucose</div>
-            <div class="glucose-step">Muscle conserves glucose use, blood glucose returns toward set point</div>
-          </div>
-          <div class="glucose-response-box">
-            <h4>Key Glands and Hormones</h4>
-            <p><strong>Primary gland:</strong> Pancreas (islets, alpha cells)</p>
-            <p><strong>Hormonal profile:</strong> Glucagon high, insulin reduced</p>
-            <p><strong>Target organs:</strong> Liver, skeletal muscle, adipose tissue</p>
-            <p><strong>Net response:</strong> Increased hepatic glucose release and fuel mobilization</p>
-          </div>
-        </article>
-
-        <aside class="target-organs-card" aria-label="Glucose target organs and glands">
-          <h3>Organs and Target Cells</h3>
-          <p>These tissues are central to glucose balance and respond dynamically to insulin and glucagon.</p>
-
-          <div class="organ-grid">
-            <article class="organ-tile pancreas-tile">
-              <svg viewBox="0 0 120 80" class="organ-icon" aria-hidden="true">
-                <path d="M13 45c12-11 29-17 47-17 20 0 35 6 45 15 4 4 4 10 0 14-9 9-24 15-45 15-19 0-36-5-47-13-5-4-5-10 0-14z" />
-              </svg>
-              <h4>Pancreas</h4>
-              <p>Sensor gland for blood glucose; releases insulin and glucagon from islet cells.</p>
+          <div class="glucose-loop-panels">
+            <article class="glucose-stage-panel" aria-live="polite">
+              <h3 id="glucose-stage-title">Hyperglycaemia Pathway: Stage 1</h3>
+              <p id="glucose-stage-detail">Blood glucose rises after a carbohydrate-rich meal.</p>
             </article>
 
-            <article class="organ-tile liver-tile">
-              <svg viewBox="0 0 120 80" class="organ-icon" aria-hidden="true">
-                <path d="M10 48c0-18 18-30 42-30h57v37c0 9-8 17-17 17H38C23 72 10 62 10 48z" />
-              </svg>
-              <h4>Liver</h4>
-              <p>Major glucose buffer: stores glucose as glycogen and releases glucose when needed.</p>
-            </article>
-
-            <article class="organ-tile muscle-tile">
-              <svg viewBox="0 0 120 80" class="organ-icon" aria-hidden="true">
-                <path d="M16 56c0-9 5-16 13-20l25-12c6-3 13-1 17 4l17 20c4 5 4 11 1 16-4 6-11 9-18 7L34 64c-11-2-18-8-18-8z" />
-              </svg>
-              <h4>Skeletal Muscle</h4>
-              <p>Insulin-sensitive target tissue that takes up glucose for glycogen storage and ATP production.</p>
-            </article>
+            <aside class="target-organs-card" aria-label="Glucose target organs and glands">
+              <h3>Stage Focus</h3>
+              <p>Use the numbered loop buttons to step through the pathway. Each button now includes stage text and mini organ cues.</p>
+              <div class="glucose-particles" aria-hidden="true">
+                <span class="glucose-particle p-1"></span>
+                <span class="glucose-particle p-2"></span>
+                <span class="glucose-particle p-3"></span>
+                <span class="glucose-particle p-4"></span>
+              </div>
+            </aside>
           </div>
 
-          <div class="glucose-particles" aria-hidden="true">
-            <span class="glucose-particle p-1"></span>
-            <span class="glucose-particle p-2"></span>
-            <span class="glucose-particle p-3"></span>
-            <span class="glucose-particle p-4"></span>
+          <div class="glucose-response-box glucose-response-strip">
+            <h4>Current Stage Summary</h4>
+            <p><strong>Primary gland:</strong> <span id="glucose-stage-gland">Pancreas (islets, beta cells)</span></p>
+            <p><strong>Hormonal profile:</strong> <span id="glucose-stage-hormone">Insulin rising, glucagon suppressed</span></p>
+            <p><strong>Primary targets:</strong> <span id="glucose-stage-target">Liver and skeletal muscle</span></p>
+            <p><strong>Net response:</strong> <span id="glucose-stage-response">System prepares to increase glucose uptake and storage.</span></p>
           </div>
-        </aside>
+        </div>
       </div>
     </section>
   </main>
